@@ -1,0 +1,4718 @@
+[
+  {
+    "num": 1,
+    "num_str": "01",
+    "title": "Hệ thống quản lý bài viết tin tức",
+    "desc": "Một tòa soạn cần xây dựng ứng dụng quản lý bài viết. Mỗi bài viết  gồm tiêu đề, nội dung, ảnh đại diện, trạng thái và ngày đăng. Biên tập viên có thể quản  lý bài viết, còn khách truy cập chỉ xem bài viết đã xuất bản.",
+    "db_name": "db_bai01",
+    "model": "Post",
+    "table": "posts",
+    "controller": "Bai01Controller",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Tiêu đề bài viết",
+        "type": "text",
+        "rules": "required|string|min:5|max:255",
+        "searchable": true
+      },
+      {
+        "name": "category",
+        "label": "Chuyên mục",
+        "type": "select",
+        "options": [
+          "Thời sự",
+          "Công nghệ",
+          "Kinh tế",
+          "Thể thao",
+          "Giải trí"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "author",
+        "label": "Tác giả",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true
+      },
+      {
+        "name": "content",
+        "label": "Nội dung bài viết",
+        "type": "textarea",
+        "rules": "required|string|min:10"
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Bản nháp",
+          "Đã xuất bản",
+          "Chờ duyệt"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "published_at",
+        "label": "Ngày đăng",
+        "type": "date",
+        "rules": "nullable|date"
+      }
+    ],
+    "samples": [
+      {
+        "title": "Trí tuệ nhân tạo phát triển mạnh mẽ năm 2026",
+        "category": "Công nghệ",
+        "author": "Nguyễn Văn An",
+        "content": "AI đang thay đổi toàn bộ các ngành công nghiệp từ y tế, giáo dục đến sản xuất.",
+        "status": "Đã xuất bản",
+        "published_at": "2026-11-10"
+      },
+      {
+        "title": "Thị trường công nghệ xanh thu hút vốn đầu tư lớn",
+        "category": "Kinh tế",
+        "author": "Trần Thị Bình",
+        "content": "Năng lượng tái tạo và xe điện dẫn đầu các dự án khởi nghiệp sáng tạo.",
+        "status": "Đã xuất bản",
+        "published_at": "2026-11-12"
+      },
+      {
+        "title": "Đội tuyển trẻ giành cúp vô địch châu lục",
+        "category": "Thể thao",
+        "author": "Lê Hoàng",
+        "content": "Chiến thắng thuyết phục với tỷ số 3-1 trong trận chung kết kịch tính.",
+        "status": "Chờ duyệt",
+        "published_at": "2026-11-15"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 1. Hệ thống quản lý bài viết tin tức \n- Mô tả tình huống: Một tòa soạn cần xây dựng ứng dụng quản lý bài viết. Mỗi bài viết \ngồm tiêu đề, nội dung, ảnh đại diện, trạng thái và ngày đăng. Biên tập viên có thể quản \nlý bài viết, còn khách truy cập chỉ xem bài viết đã xuất bản. \n- Yêu cầu: \nCâu 1.  Tạo dự án Laravel, khởi chạy ứng dụng và xác định các thư mục chứa Route, \nController, View, Model, Migration và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo các Route hiển thị danh sách, biểu mẫu tạo mới, lưu bài viết, xem chi tiết, \nsửa và cập nhật bài viết. \nCâu 3. Tạo PostController và triển khai các phương thức xử lý danh sách, chi tiết và tạo \nbài viết. \nCâu 4. Xây dựng giao diện Blade hiển thị danh sách bài viết, sử dụng vòng lặp, điều kiện \nvà template dùng chung. \nCâu 5. Xử lý dữ liệu Request khi tạo bài viết; kiểm tra tiêu đề và nội dung bắt buộc, tiêu \nđề có độ dài phù hợp. \nCâu 6. Tạo Migration cho bảng posts, cấu hình Model Post và triển khai chức năng lưu, \ncập nhật dữ liệu bằng Eloquent ORM. \nCâu 7. Xây dựng chức năng tải ảnh đại diện lên hệ thống bằng File Storage và lưu đường \ndẫn ảnh vào cơ sở dữ liệu. \nCâu 8. Áp dụng Middleware yêu cầu đăng nhập đối với chức năng quản trị; hoàn thiện \nluồng tạo, sửa, xóa bài viết và kiểm tra các trường hợp dữ liệu không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 2,
+    "num_str": "02",
+    "title": "Hệ thống quản lý sản phẩm",
+    "desc": "Một cửa hàng cần quản lý sản phẩm gồm mã sản phẩm, tên, giá bán,  số lượng tồn kho và hình ảnh. Nhân viên quản lý sản phẩm, khách truy cập được xem  danh sách sản phẩm.",
+    "db_name": "db_bai02",
+    "model": "Product",
+    "table": "products",
+    "controller": "Bai02Controller",
+    "fields": [
+      {
+        "name": "product_code",
+        "label": "Mã sản phẩm",
+        "type": "text",
+        "rules": "required|string|max:50",
+        "searchable": true
+      },
+      {
+        "name": "name",
+        "label": "Tên sản phẩm",
+        "type": "text",
+        "rules": "required|string|min:3|max:200",
+        "searchable": true
+      },
+      {
+        "name": "category",
+        "label": "Danh mục",
+        "type": "select",
+        "options": [
+          "Điện thoại",
+          "Laptop",
+          "Phụ kiện",
+          "Gia dụng"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "price",
+        "label": "Giá bán (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0"
+      },
+      {
+        "name": "stock",
+        "label": "Số lượng tồn",
+        "type": "number",
+        "rules": "required|integer|min:0",
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả sản phẩm",
+        "type": "textarea",
+        "rules": "nullable|string"
+      }
+    ],
+    "samples": [
+      {
+        "product_code": "SP001",
+        "name": "iPhone 15 Pro Max 256GB",
+        "category": "Điện thoại",
+        "price": 29990000,
+        "stock": 15,
+        "description": "Thiết kế titan cao cấp, chip A17 Pro mạnh mẽ."
+      },
+      {
+        "product_code": "SP002",
+        "name": "MacBook Air M3 16GB",
+        "category": "Laptop",
+        "price": 32500000,
+        "stock": 8,
+        "description": "Mỏng nhẹ, thời lượng pin lên đến 18 tiếng liên tục."
+      },
+      {
+        "product_code": "SP003",
+        "name": "Tai nghe AirPods Pro 2",
+        "category": "Phụ kiện",
+        "price": 5490000,
+        "stock": 25,
+        "description": "Chống ồn chủ động vượt trội, âm thanh vòm sống động."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 2. Hệ thống quản lý sản phẩm \n- Mô tả tình huống: Một cửa hàng cần quản lý sản phẩm gồm mã sản phẩm, tên, giá bán, \nsố lượng tồn kho và hình ảnh. Nhân viên quản lý sản phẩm, khách truy cập được xem \ndanh sách sản phẩm. \n- Yêu cầu: \nCâu 1. Khởi tạo và chạy dự án Laravel; thiết lập kết nối MySQL và xác định cấu trúc thư \nmục cần sử dụng. \nCâu 2. Khai báo Route cho danh sách sản phẩm, tạo mới, lưu, chi tiết, chỉnh sửa và cập \nnhật sản phẩm. \nCâu 3. Tạo ProductController; triển khai chức năng lấy danh sách, xem chi tiết và hiển thị \nbiểu mẫu tạo sản phẩm. \nCâu 4. Xây dựng các View Blade để hiển thị danh sách sản phẩm, giá bán, tồn kho và \nthông báo kết quả thao tác. \nCâu 5. Xử lý Request và Validation: tên bắt buộc, giá không âm, số lượng tồn kho là số \nnguyên không âm. \nCâu 6. Tạo Migration, Model Product; sử dụng Eloquent để thêm, sửa, xóa và truy vấn sản \nphẩm. \nCâu 7. Xây dựng chức năng tải ảnh sản phẩm; lưu ảnh bằng File Storage và hiển thị ảnh \ntrong danh sách. \nCâu 8. Bảo vệ các Route quản trị bằng Middleware; kiểm tra quyền sửa, xóa sản phẩm và \nthử nghiệm trường hợp người chưa đăng nhập truy cập chức năng quản trị. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 3,
+    "num_str": "03",
+    "title": "Hệ thống quản lý sinh viên",
+    "desc": "Phòng đào tạo cần quản lý sinh viên gồm mã sinh viên, họ tên,  email, ngày sinh và lớp học. Nhân viên được phép cập nhật dữ liệu; người dùng thông  thường chỉ được xem danh sách.",
+    "db_name": "db_bai03",
+    "model": "Student",
+    "table": "students",
+    "controller": "Bai03Controller",
+    "fields": [
+      {
+        "name": "student_code",
+        "label": "Mã sinh viên",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true
+      },
+      {
+        "name": "fullname",
+        "label": "Họ và tên",
+        "type": "text",
+        "rules": "required|string|min:3|max:100",
+        "searchable": true
+      },
+      {
+        "name": "email",
+        "label": "Địa chỉ Email",
+        "type": "email",
+        "rules": "required|email|max:150",
+        "searchable": true
+      },
+      {
+        "name": "birthdate",
+        "label": "Ngày sinh",
+        "type": "date",
+        "rules": "required|date"
+      },
+      {
+        "name": "class_name",
+        "label": "Lớp học",
+        "type": "select",
+        "options": [
+          "CNTT K15A",
+          "CNTT K15B",
+          "KTPM K15A",
+          "HTTT K15A"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "gpa",
+        "label": "Điểm trung bình (GPA)",
+        "type": "number",
+        "rules": "nullable|numeric|between:0,4"
+      }
+    ],
+    "samples": [
+      {
+        "student_code": "SV2026001",
+        "fullname": "Nguyễn Hoàng Nam",
+        "email": "nam.nh@student.edu.vn",
+        "birthdate": "2004-05-14",
+        "class_name": "CNTT K15A",
+        "gpa": 3.65
+      },
+      {
+        "student_code": "SV2026002",
+        "fullname": "Phạm Mai Phương",
+        "email": "phuong.pm@student.edu.vn",
+        "birthdate": "2004-09-22",
+        "class_name": "KTPM K15A",
+        "gpa": 3.82
+      },
+      {
+        "student_code": "SV2026003",
+        "fullname": "Trần Quốc Bảo",
+        "email": "bao.tq@student.edu.vn",
+        "birthdate": "2003-12-08",
+        "class_name": "CNTT K15B",
+        "gpa": 3.2
+      }
+    ],
+    "full_text": "ĐỀ SỐ 3. Hệ thống quản lý sinh viên \n- Mô tả tình huống:  Phòng đào tạo cần quản lý sinh viên gồm mã sinh viên, họ tên, \nemail, ngày sinh và lớp học. Nhân viên được phép cập nhật dữ liệu; người dùng thông \nthường chỉ được xem danh sách. \n- Yêu cầu: \nCâu 1. Tạo ứng dụng Laravel, cấu hình môi trường và kết nối cơ sở dữ liệu phục vụ quản \nlý sinh viên. \nCâu 2. Định nghĩa các Route cho danh sách, tạo mới, lưu, xem chi tiết, chỉnh sửa và cập \nnhật sinh viên. \nCâu 3. Tạo StudentController và triển khai các phương thức hiển thị danh sách, chi tiết và \nbiểu mẫu tạo mới. \nCâu 4. Tạo giao diện Blade hiển thị danh sách sinh viên, sử dụng layout chung và hiển thị \nthông báo thành công hoặc thất bại. \nCâu 5. Kiểm tra dữ liệu đầu vào: họ tên bắt buộc, email đúng định dạng và không trùng, \nngày sinh hợp lệ. \nCâu 6. Tạo bảng students, Model Student; triển khai CRUD bằng Eloquent và truy vấn \ndanh sách sinh viên theo tên. \nCâu 7. Sử dụng Query Builder để lọc sinh viên theo lớp học và sắp xếp theo họ tên. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản trị; hoàn thiện kiểm thử tạo, sửa, xóa \nvà kiểm tra dữ liệu email trùng lặp. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 4,
+    "num_str": "04",
+    "title": "Hệ thống quản lý thư viện",
+    "desc": "",
+    "db_name": "db_bai04",
+    "model": "Book",
+    "table": "books",
+    "controller": "Bai04Controller",
+    "fields": [
+      {
+        "name": "book_code",
+        "label": "Mã sách",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true
+      },
+      {
+        "name": "title",
+        "label": "Tên sách",
+        "type": "text",
+        "rules": "required|string|min:2|max:200",
+        "searchable": true
+      },
+      {
+        "name": "author",
+        "label": "Tác giả",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true
+      },
+      {
+        "name": "publisher",
+        "label": "Nhà xuất bản",
+        "type": "text",
+        "rules": "nullable|string|max:150"
+      },
+      {
+        "name": "publish_year",
+        "label": "Năm xuất bản",
+        "type": "number",
+        "rules": "required|integer|min:1900|max:2026",
+        "filterable": true
+      },
+      {
+        "name": "quantity",
+        "label": "Số lượng sách",
+        "type": "number",
+        "rules": "required|integer|min:0"
+      }
+    ],
+    "samples": [
+      {
+        "book_code": "BK-001",
+        "title": "Lập trình Web với Laravel chuyên sâu",
+        "author": "Taylor Otwell",
+        "publisher": "NXB Thông Tin",
+        "publish_year": 2024,
+        "quantity": 12
+      },
+      {
+        "book_code": "BK-002",
+        "title": "Clean Code - Nghệ thuật viết code sạch",
+        "author": "Robert C. Martin",
+        "publisher": "NXB Khoa Học",
+        "publish_year": 2023,
+        "quantity": 8
+      },
+      {
+        "book_code": "BK-003",
+        "title": "Thiết kế kiến trúc hệ thống phân tán",
+        "author": "Martin Fowler",
+        "publisher": "NXB Trẻ",
+        "publish_year": 2025,
+        "quantity": 15
+      }
+    ],
+    "full_text": "ĐỀ SỐ 4. Hệ thống quản lý thư viện \n- Mô tả tình huống: Thư viện cần quản lý sách gồm mã sách, tên sách, tác giả, năm xuất \nbản và số lượng. Nhân viên quản lý sách, bạn đọc có thể tra cứu danh mục sách. \nYêu cầu: \nCâu 1. Khởi tạo dự án Laravel, cấu hình cơ sở dữ liệu và xác định các thành phần cần thiết \nđể xây dựng hệ thống quản lý sách. \nCâu 2. Khai báo Route cho tra cứu sách, xem chi tiết, thêm sách, sửa sách và xóa sách. \nCâu 3. Tạo BookController, xử lý truy vấn danh sách sách và hiển thị chi tiết một cuốn \nsách. \nCâu 4. Xây dựng View Blade cho danh mục sách, biểu mẫu nhập sách và kết quả tìm kiếm. \nCâu 5. Validation dữ liệu sách: tên sách và tác giả bắt buộc, năm xuất bản hợp lệ, số lượng \nlà số nguyên không âm. \nCâu 6. Tạo Migration và Model Book; triển khai CRUD bằng Eloquent ORM. \nCâu 7. Sử dụng Query Builder tìm sách theo tên hoặc tác giả; sắp xếp kết quả theo năm \nxuất bản. \nCâu 8. Bảo vệ chức năng thêm, sửa, xóa sách bằng Middleware; kiểm thử dữ liệu sai và \nkiểm tra việc truy cập trái phép. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 5,
+    "num_str": "05",
+    "title": "Hệ thống quản lý đơn hàng",
+    "desc": "Một cửa hàng trực tuyến cần quản lý đơn hàng gồm mã đơn, tên  khách hàng, địa chỉ giao hàng, tổng tiền và trạng thái. Nhân viên có thể theo dõi và cập  nhật trạng thái đơn hàng.",
+    "db_name": "db_bai05",
+    "model": "Order",
+    "table": "orders",
+    "controller": "Bai05Controller",
+    "fields": [
+      {
+        "name": "order_code",
+        "label": "Mã đơn hàng",
+        "type": "text",
+        "rules": "required|string|max:50",
+        "searchable": true
+      },
+      {
+        "name": "customer_name",
+        "label": "Tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true
+      },
+      {
+        "name": "shipping_address",
+        "label": "Địa chỉ giao hàng",
+        "type": "text",
+        "rules": "required|string|max:255"
+      },
+      {
+        "name": "total_amount",
+        "label": "Tổng tiền (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0"
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái đơn",
+        "type": "select",
+        "options": [
+          "Chờ xử lý",
+          "Đang giao hàng",
+          "Đã hoàn thành",
+          "Đã hủy"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "order_date",
+        "label": "Ngày đặt",
+        "type": "date",
+        "rules": "required|date"
+      }
+    ],
+    "samples": [
+      {
+        "order_code": "DH20261101",
+        "customer_name": "Lê Văn Hùng",
+        "shipping_address": "123 Lê Lợi, Quận 1, TP.HCM",
+        "total_amount": 2500000,
+        "status": "Chờ xử lý",
+        "order_date": "2026-11-15"
+      },
+      {
+        "order_code": "DH20261102",
+        "customer_name": "Nguyễn Thị Thảo",
+        "shipping_address": "456 Kim Mã, Ba Đình, Hà Nội",
+        "total_amount": 4800000,
+        "status": "Đang giao hàng",
+        "order_date": "2026-11-16"
+      },
+      {
+        "order_code": "DH20261103",
+        "customer_name": "Trương Minh Tuấn",
+        "shipping_address": "78 Hùng Vương, Hải Châu, Đà Nẵng",
+        "total_amount": 1200000,
+        "status": "Đã hoàn thành",
+        "order_date": "2026-11-14"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 5. Hệ thống quản lý đơn hàng \n- Mô tả tình huống:  Một cửa hàng trực tuyến cần quản lý đơn hàng gồm mã đơn, tên \nkhách hàng, địa chỉ giao hàng, tổng tiền và trạng thái. Nhân viên có thể theo dõi và cập \nnhật trạng thái đơn hàng. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình kết nối cơ sở dữ liệu để triển khai hệ thống quản lý \nđơn hàng. \nCâu 2. Định nghĩa Route cho danh sách đơn hàng, chi tiết đơn hàng, tạo đơn và cập nhật \ntrạng thái. \nCâu 3. Tạo OrderController; triển khai danh sách đơn hàng, chi tiết đơn hàng và biểu mẫu \ntạo đơn. \nCâu 4. Xây dựng giao diện Blade hiển thị mã đơn, khách hàng, tổng tiền và trạng thái bằng \ncấu trúc điều kiện. \nCâu 5. Xử lý Request và Validation: khách hàng, địa chỉ bắt buộc; tổng tiền không âm; \ntrạng thái thuộc danh sách cho phép. \nCâu 6.  Tạo Migration, Model Order; thực hiện thêm, sửa và truy vấn đơn hàng bằng \nEloquent. \nCâu 7. Sử dụng Query Builder lọc đơn hàng theo trạng thái và sắp xếp theo thời gian tạo. \nCâu 8. Áp dụng Middleware cho khu vực quản trị; hoàn thiện cập nhật trạng thái và kiểm \nthử trường hợp gửi trạng thái không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 6,
+    "num_str": "06",
+    "title": "Hệ thống quản lý khóa học",
+    "desc": "Trung tâm đào tạo cần quản lý khóa học gồm tên khóa học, mô tả,  học phí, thời lượng và trạng thái. Nhân viên quản lý khóa học; học viên chỉ xem các  khóa học đang mở.",
+    "db_name": "db_bai06",
+    "model": "Course",
+    "table": "courses",
+    "controller": "Bai06Controller",
+    "fields": [
+      {
+        "name": "course_code",
+        "label": "Mã khóa học",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true
+      },
+      {
+        "name": "name",
+        "label": "Tên khóa học",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true
+      },
+      {
+        "name": "duration_weeks",
+        "label": "Thời lượng (tuần)",
+        "type": "number",
+        "rules": "required|integer|min:1"
+      },
+      {
+        "name": "tuition_fee",
+        "label": "Học phí (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0"
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Đang tuyển sinh",
+          "Đang học",
+          "Đã kết thúc"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả khóa học",
+        "type": "textarea",
+        "rules": "nullable|string"
+      }
+    ],
+    "samples": [
+      {
+        "course_code": "LARAVEL101",
+        "name": "Lập trình Backend chuyên nghiệp với Laravel",
+        "duration_weeks": 12,
+        "tuition_fee": 4500000,
+        "status": "Đang tuyển sinh",
+        "description": "Nắm vững Eloquent, REST API, Authentication và Kiến trúc MVC."
+      },
+      {
+        "course_code": "REACT201",
+        "name": "Xây dựng ứng dụng Frontend hiện đại với React 19",
+        "duration_weeks": 10,
+        "tuition_fee": 4200000,
+        "status": "Đang tuyển sinh",
+        "description": "Thực hành React hooks, State management và tối ưu hóa UI."
+      },
+      {
+        "course_code": "DEVOPS301",
+        "name": "Triển khai CI/CD và Docker cho dự án thực tế",
+        "duration_weeks": 8,
+        "tuition_fee": 3800000,
+        "status": "Đang học",
+        "description": "Tự động hóa build, test và deploy lên Cloud server."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 6. Hệ thống quản lý khóa học \n- Mô tả tình huống: Trung tâm đào tạo cần quản lý khóa học gồm tên khóa học, mô tả, \nhọc phí, thời lượng và trạng thái. Nhân viên quản lý khóa học; học viên chỉ xem các \nkhóa học đang mở. \n- Yêu cầu: \nCâu 1. Khởi tạo ứng dụng Laravel, chạy dự án và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách khóa học, chi tiết, tạo mới, lưu, chỉnh sửa và cập \nnhật khóa học. \nCâu 3. Tạo CourseController, xử lý danh sách khóa học và trang chi tiết khóa học. \nCâu 4. Tạo giao diện Blade hiển thị tên khóa học, học phí, thời lượng và trạng thái bằng \nlayout chung. \nCâu 5. Validation tên khóa học bắt buộc, học phí không âm, thời lượng là số dương và \ntrạng thái hợp lệ. \nCâu 6. Tạo bảng courses, Model Course; triển khai CRUD bằng Eloquent ORM. \nCâu 7. Sử dụng Query Builder lọc khóa học theo học phí và trạng thái; sắp xếp theo học \nphí tăng dần. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; chỉ hiển thị khóa học đang mở cho \nkhách truy cập và kiểm thử các Route liên quan. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 7,
+    "num_str": "07",
+    "title": "Hệ thống quản lý nhân viên",
+    "desc": "Một doanh nghiệp cần quản lý nhân viên gồm mã nhân viên, họ tên,  email, phòng ban, lương và trạng thái làm việc. Bộ phận nhân sự quản lý dữ liệu nhân  viên.",
+    "db_name": "db_bai07",
+    "model": "Employee",
+    "table": "employees",
+    "controller": "Bai07Controller",
+    "fields": [
+      {
+        "name": "employee_code",
+        "label": "Mã nhân viên",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true
+      },
+      {
+        "name": "fullname",
+        "label": "Họ và tên",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true
+      },
+      {
+        "name": "email",
+        "label": "Email công vụ",
+        "type": "email",
+        "rules": "required|email",
+        "searchable": true
+      },
+      {
+        "name": "department",
+        "label": "Phòng ban",
+        "type": "select",
+        "options": [
+          "Kỹ thuật phần mềm",
+          "Kinh doanh",
+          "Nhân sự",
+          "Kế toán",
+          "Marketing"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "salary",
+        "label": "Mức lương (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0"
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái làm việc",
+        "type": "select",
+        "options": [
+          "Chính thức",
+          "Thử việc",
+          "Đã nghỉ việc"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "employee_code": "NV001",
+        "fullname": "Trần Đình Khang",
+        "email": "khang.td@company.vn",
+        "department": "Kỹ thuật phần mềm",
+        "salary": 22000000,
+        "status": "Chính thức"
+      },
+      {
+        "employee_code": "NV002",
+        "fullname": "Lê Thị Thu Hằng",
+        "email": "hang.lt@company.vn",
+        "department": "Nhân sự",
+        "salary": 16000000,
+        "status": "Chính thức"
+      },
+      {
+        "employee_code": "NV003",
+        "fullname": "Vũ Anh Tuấn",
+        "email": "tuan.va@company.vn",
+        "department": "Kinh doanh",
+        "salary": 14000000,
+        "status": "Thử việc"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 7. Hệ thống quản lý nhân viên \n- Mô tả tình huống: Một doanh nghiệp cần quản lý nhân viên gồm mã nhân viên, họ tên, \nemail, phòng ban, lương và trạng thái làm việc. Bộ phận nhân sự quản lý dữ liệu nhân \nviên. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel, cấu hình môi trường và cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách nhân viên, thêm mới, chi tiết, chỉnh sửa và cập \nnhật nhân viên. \nCâu 3. Tạo EmployeeController với chức năng hiển thị danh sách và chi tiết nhân viên. \nCâu 4. Xây dựng View Blade hiển thị danh sách nhân viên và định dạng dữ liệu lương, \ntrạng thái làm việc. \nCâu 5. Kiểm tra họ tên bắt buộc, email hợp lệ và duy nhất, lương không âm, trạng thái \nthuộc danh sách cho phép. \nCâu 6. Tạo Migration, Model Employee; thực hiện CRUD bằng Eloquent ORM. \nCâu 7. Sử dụng Query Builder tìm nhân viên theo phòng ban và lọc nhân viên có mức \nlương lớn hơn giá trị nhập vào. \nCâu 8. Bảo vệ chức năng quản lý bằng Middleware; hoàn thiện việc cập nhật nhân viên và \nkiểm thử các trường hợp dữ liệu không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 8,
+    "num_str": "08",
+    "title": "Hệ thống quản lý phòng trọ",
+    "desc": "Chủ nhà cần quản lý phòng trọ gồm mã phòng, diện tích, giá thuê,  trạng thái và mô tả. Người thuê có thể xem danh sách phòng còn trống; chủ nhà quản  lý thông tin phòng.",
+    "db_name": "db_bai08",
+    "model": "Room",
+    "table": "rooms",
+    "controller": "Bai08Controller",
+    "fields": [
+      {
+        "name": "room_code",
+        "label": "Mã số phòng",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true
+      },
+      {
+        "name": "room_type",
+        "label": "Loại phòng",
+        "type": "select",
+        "options": [
+          "Phòng đơn",
+          "Phòng đôi",
+          "Căn hộ mini",
+          "Studio"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "area_m2",
+        "label": "Diện tích (m²)",
+        "type": "number",
+        "rules": "required|numeric|min:5"
+      },
+      {
+        "name": "rent_price",
+        "label": "Giá thuê / tháng (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0"
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Còn trống",
+          "Đã cho thuê",
+          "Đang sửa chữa"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả & Tiện ích",
+        "type": "textarea",
+        "rules": "nullable|string"
+      }
+    ],
+    "samples": [
+      {
+        "room_code": "P101",
+        "room_type": "Phòng đơn",
+        "area_m2": 20,
+        "rent_price": 2800000,
+        "status": "Còn trống",
+        "description": "Có ban công thoáng mát, nóng lạnh, máy lạnh inverter."
+      },
+      {
+        "room_code": "P102",
+        "room_type": "Studio",
+        "area_m2": 32,
+        "rent_price": 4500000,
+        "status": "Đã cho thuê",
+        "description": "Full nội thất: giường tủ, máy giặt riêng, bếp từ."
+      },
+      {
+        "room_code": "P201",
+        "room_type": "Căn hộ mini",
+        "area_m2": 38,
+        "rent_price": 5200000,
+        "status": "Còn trống",
+        "description": "Gác lửng đúc cao cấp, bãi xe tầng trệt có bảo vệ 24/7."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 8. Hệ thống quản lý phòng trọ \n- Mô tả tình huống: Chủ nhà cần quản lý phòng trọ gồm mã phòng, diện tích, giá thuê, \ntrạng thái và mô tả. Người thuê có thể xem danh sách phòng còn trống; chủ nhà quản \nlý thông tin phòng. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel, cấu hình kết nối cơ sở dữ liệu và chuẩn bị môi trường chạy ứng \ndụng. \nCâu 2. Khai báo Route cho danh sách phòng, chi tiết phòng, tạo mới và cập nhật thông tin \nphòng. \nCâu 3. Tạo RoomController và triển khai chức năng danh sách, chi tiết và tạo phòng. \nCâu 4. Xây dựng giao diện Blade hiển thị giá thuê, diện tích và trạng thái phòng. \nCâu 5. Validation diện tích và giá thuê phải lớn hơn 0; trạng thái phải thuộc danh sách cho \nphép. \nCâu 6. Tạo Migration, Model Room; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc phòng theo khoảng giá và chỉ hiển thị phòng còn trống \ncho khách. \nCâu 8. Áp dụng Middleware bảo vệ các chức năng của chủ nhà; kiểm thử cập nhật trạng \nthái phòng và truy cập trái phép. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 9,
+    "num_str": "09",
+    "title": "Hệ thống quản lý nhà hàng",
+    "desc": "Nhà hàng cần quản lý thực đơn gồm tên món ăn, danh mục, giá, mô  tả và ảnh món ăn. Khách truy cập xem thực đơn; nhân viên quản trị được thêm và cập  nhật món.",
+    "db_name": "db_bai09",
+    "model": "MenuItem",
+    "table": "menu_items",
+    "controller": "Bai09Controller",
+    "fields": [
+      {
+        "name": "item_name",
+        "label": "Tên món ăn / thức uống",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true
+      },
+      {
+        "name": "category",
+        "label": "Danh mục",
+        "type": "select",
+        "options": [
+          "Khai vị",
+          "Món chính",
+          "Tráng miệng",
+          "Đồ uống"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "price",
+        "label": "Đơn giá (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0"
+      },
+      {
+        "name": "is_available",
+        "label": "Trạng thái phục vụ",
+        "type": "select",
+        "options": [
+          "Đang phục vụ",
+          "Tạm hết hàng"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả món ăn",
+        "type": "textarea",
+        "rules": "nullable|string"
+      }
+    ],
+    "samples": [
+      {
+        "item_name": "Phở Bò Tái Lăn Hà Nội",
+        "category": "Món chính",
+        "price": 65000,
+        "is_available": "Đang phục vụ",
+        "description": "Bò xào tái lăn thơm mùi tỏi, nước dùng ninh từ xương ống 12 tiếng."
+      },
+      {
+        "item_name": "Gỏi Cuốn Tôm Thịt",
+        "category": "Khai vị",
+        "price": 45000,
+        "is_available": "Đang phục vụ",
+        "description": "Kèm nước chấm tương đen đậu phộng chuẩn vị miền Nam."
+      },
+      {
+        "item_name": "Trà Đào Cam Sả",
+        "category": "Đồ uống",
+        "price": 38000,
+        "is_available": "Đang phục vụ",
+        "description": "Hương vị thanh mát, đào miếng giòn ngọt mát lạnh."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 9. Hệ thống quản lý nhà hàng \n- Mô tả tình huống: Nhà hàng cần quản lý thực đơn gồm tên món ăn, danh mục, giá, mô \ntả và ảnh món ăn. Khách truy cập xem thực đơn; nhân viên quản trị được thêm và cập \nnhật món. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách món ăn, chi tiết, tạo món, lưu món và cập nhật \nmón. \nCâu 3. Tạo MenuItemController xử lý danh sách và chi tiết món ăn. \nCâu 4. Xây dựng giao diện Blade hiển thị thực đơn, giá món ăn và ảnh đại diện. \nCâu 5. Validation tên món bắt buộc, giá lớn hơn 0, ảnh đúng định dạng và dung lượng cho \nphép. \nCâu 6. Tạo Migration, Model MenuItem; triển khai CRUD bằng Eloquent ORM. \nCâu 7. Lưu ảnh món ăn bằng File Storage, sử dụng Query Builder lọc món theo danh mục. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử cập nhật ảnh, dữ liệu giá \nkhông hợp lệ và quyền truy cập. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 10,
+    "num_str": "10",
+    "title": "Hệ thống quản lý phòng khám",
+    "desc": "Phòng khám cần quản lý hồ sơ bệnh nhân gồm mã bệnh nhân, họ  tên, số điện thoại, ngày sinh và ghi chú hành chính. Nhân viên tiếp nhận được quản lý  hồ sơ; khách không được truy cập dữ liệu nội bộ.",
+    "db_name": "db_bai10",
+    "model": "Patient",
+    "table": "patients",
+    "controller": "Bai10Controller",
+    "fields": [
+      {
+        "name": "patient_code",
+        "label": "Mã bệnh nhân",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true
+      },
+      {
+        "name": "fullname",
+        "label": "Họ và tên bệnh nhân",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true
+      },
+      {
+        "name": "phone",
+        "label": "Số điện thoại liên hệ",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true
+      },
+      {
+        "name": "birthdate",
+        "label": "Ngày sinh",
+        "type": "date",
+        "rules": "required|date"
+      },
+      {
+        "name": "gender",
+        "label": "Giới tính",
+        "type": "select",
+        "options": [
+          "Nam",
+          "Nữ",
+          "Khác"
+        ],
+        "rules": "required|string",
+        "filterable": true
+      },
+      {
+        "name": "notes",
+        "label": "Ghi chú bệnh án / triệu chứng",
+        "type": "textarea",
+        "rules": "nullable|string"
+      }
+    ],
+    "samples": [
+      {
+        "patient_code": "BN2026-001",
+        "fullname": "Hoàng Minh Trí",
+        "phone": "0912345678",
+        "birthdate": "1995-04-12",
+        "gender": "Nam",
+        "notes": "Tiền sử viêm họng dị ứng thời tiết, huyết áp ổn định."
+      },
+      {
+        "patient_code": "BN2026-002",
+        "fullname": "Đỗ Bích Ngọc",
+        "phone": "0987654321",
+        "birthdate": "1998-10-25",
+        "gender": "Nữ",
+        "notes": "Khám định kỳ răng hàm mặt, không dị ứng thuốc kháng sinh."
+      },
+      {
+        "patient_code": "BN2026-003",
+        "fullname": "Lâm Quốc Cường",
+        "phone": "0905112233",
+        "birthdate": "1982-01-18",
+        "gender": "Nam",
+        "notes": "Đau mỏi vai gáy do làm việc văn phòng kéo dài."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 10. Hệ thống quản lý phòng khám \n- Mô tả tình huống:  Phòng khám cần quản lý hồ sơ bệnh nhân gồm mã bệnh nhân, họ \ntên, số điện thoại, ngày sinh và ghi chú hành chính. Nhân viên tiếp nhận được quản lý \nhồ sơ; khách không được truy cập dữ liệu nội bộ. \n- Yêu cầu: \nCâu 1. Tạo ứng dụng Laravel và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách bệnh nhân, tạo hồ sơ, xem chi tiết và cập nhật thông \ntin. \nCâu 3. Tạo PatientController xử lý danh sách và chi tiết hồ sơ bệnh nhân. \nCâu 4. Tạo View Blade hiển thị danh sách và biểu mẫu hồ sơ bệnh nhân. \nCâu 5. Validation họ tên bắt buộc, số điện thoại theo quy tắc đã chọn và ngày sinh hợp lệ. \nCâu 6. Tạo Migration, Model Patient; triển khai CRUD bằng Eloquent ORM. \nCâu 7. Sử dụng Query Builder tìm bệnh nhân theo họ tên hoặc số điện thoại. \nCâu 8. Áp dụng Middleware xác thực để bảo vệ hồ sơ; kiểm thử truy cập khi chưa đăng \nnhập và không đưa thông tin bệnh nhân ra phản hồi ngoài phạm vi cho phép. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 11,
+    "num_str": "11",
+    "title": "Hệ thống quản lý công việc",
+    "desc": "Nhóm phát triển phần mềm cần quản lý công việc gồm tiêu đề, mô  tả, người phụ trách, hạn hoàn thành và trạng thái. Người dùng đăng nhập để quản lý  công việc được giao.",
+    "db_name": "db_bai11",
+    "model": "Task",
+    "table": "tasks",
+    "controller": "Bai11Controller",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Tiêu đề công việc",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "assignee",
+        "label": "Người phụ trách",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "priority",
+        "label": "Mức độ ưu tiên",
+        "type": "select",
+        "options": [
+          "Thấp",
+          "Trung bình",
+          "Cao",
+          "Khẩn cấp"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "due_date",
+        "label": "Hạn hoàn thành",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Chưa bắt đầu",
+          "Đang thực hiện",
+          "Hoàn thành",
+          "Tạm hoãn"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả chi tiết",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "title": "Dữ liệu Tiêu đề công việc số 1",
+        "assignee": "Dữ liệu Người phụ trách số 1",
+        "priority": "Thấp",
+        "due_date": "2026-11-11",
+        "status": "Chưa bắt đầu",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 11 - mục #1."
+      },
+      {
+        "title": "Dữ liệu Tiêu đề công việc số 2",
+        "assignee": "Dữ liệu Người phụ trách số 2",
+        "priority": "Trung bình",
+        "due_date": "2026-11-12",
+        "status": "Đang thực hiện",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 11 - mục #2."
+      },
+      {
+        "title": "Dữ liệu Tiêu đề công việc số 3",
+        "assignee": "Dữ liệu Người phụ trách số 3",
+        "priority": "Cao",
+        "due_date": "2026-11-13",
+        "status": "Hoàn thành",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 11 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 11. Hệ thống quản lý công việc \n- Mô tả tình huống: Nhóm phát triển phần mềm cần quản lý công việc gồm tiêu đề, mô \ntả, người phụ trách, hạn hoàn thành và trạng thái. Người dùng đăng nhập để quản lý \ncông việc được giao. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu cho hệ thống công việc. \nCâu 2. Định nghĩa Route cho danh sách, tạo, chi tiết, cập nhật trạng thái và chỉnh sửa công \nviệc. \nCâu 3. Tạo TaskController xử lý danh sách, chi tiết và tạo công việc. \nCâu 4. Xây dựng giao diện Blade hiển thị hạn hoàn thành và trạng thái công việc bằng \nđiều kiện. \nCâu 5. Validation tiêu đề bắt buộc, hạn hoàn thành hợp lệ và trạng thái thuộc tập giá trị \ncho phép. \nCâu 6. Tạo Migration, Model Task; triển khai CRUD và truy vấn công việc bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc công việc theo trạng thái, hạn hoàn thành và sắp xếp \ntheo hạn gần nhất. \nCâu 8. Sử dụng Middleware yêu cầu đăng nhập; kiểm tra người dùng chỉ được sửa công \nviệc thuộc phạm vi được giao theo quy tắc phân quyền của hệ thống. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 12,
+    "num_str": "12",
+    "title": "Hệ thống quản lý sự kiện",
+    "desc": "Một đơn vị tổ chức sự kiện cần quản lý tên sự kiện, địa điểm, thời  gian, số lượng chỗ và ảnh quảng bá. Khách truy cập xem sự kiện; nhân viên quản lý nội  dung.",
+    "db_name": "db_bai12",
+    "model": "Event",
+    "table": "events",
+    "controller": "Bai12Controller",
+    "fields": [
+      {
+        "name": "event_name",
+        "label": "Tên sự kiện",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "location",
+        "label": "Địa điểm tổ chức",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "event_date",
+        "label": "Thời gian diễn ra",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "capacity",
+        "label": "Số lượng chỗ tối đa",
+        "type": "number",
+        "rules": "required|integer|min:1",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Sắp diễn ra",
+          "Đang diễn ra",
+          "Đã kết thúc",
+          "Đã hủy"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả sự kiện",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "event_name": "Tên sự kiện mẫu #1",
+        "location": "12 Đường Lê Lợi, Quận 1, TP.HCM",
+        "event_date": "2026-11-11",
+        "capacity": 15,
+        "status": "Sắp diễn ra",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 12 - mục #1."
+      },
+      {
+        "event_name": "Tên sự kiện mẫu #2",
+        "location": "24 Đường Lê Lợi, Quận 2, TP.HCM",
+        "event_date": "2026-11-12",
+        "capacity": 20,
+        "status": "Đang diễn ra",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 12 - mục #2."
+      },
+      {
+        "event_name": "Tên sự kiện mẫu #3",
+        "location": "36 Đường Lê Lợi, Quận 3, TP.HCM",
+        "event_date": "2026-11-13",
+        "capacity": 25,
+        "status": "Đã kết thúc",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 12 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 12. Hệ thống quản lý sự kiện \n- Mô tả tình huống: Một đơn vị tổ chức sự kiện cần quản lý tên sự kiện, địa điểm, thời \ngian, số lượng chỗ và ảnh quảng bá. Khách truy cập xem sự kiện; nhân viên quản lý nội \ndung. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách, chi tiết, tạo mới và cập nhật sự kiện. \nCâu 3. Tạo EventController xử lý danh sách và chi tiết sự kiện. \nCâu 4. Tạo View Blade hiển thị sự kiện theo thời gian và trạng thái. \nCâu 5. Validation tên sự kiện, địa điểm bắt buộc; thời gian hợp lệ; số chỗ là số nguyên \ndương. \nCâu 6. Tạo Migration, Model Event; thực hiện CRUD bằng Eloquent. \nCâu 7. Lưu ảnh quảng bá bằng File Storage và dùng Query Builder lọc các sự kiện sắp \ndiễn ra. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản trị; kiểm thử tạo sự kiện với thời gian \nkhông hợp lệ và hoàn thiện luồng xử lý. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 13,
+    "num_str": "13",
+    "title": "Hệ thống quản lý bài tập trực tuyến",
+    "desc": "Giảng viên cần tạo bài tập gồm tiêu đề, nội dung, hạn nộp và tệp  đính kèm. Sinh viên xem bài tập; giảng viên quản lý nội dung và tài liệu.",
+    "db_name": "db_bai13",
+    "model": "Assignment",
+    "table": "assignments",
+    "controller": "Bai13Controller",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Tiêu đề bài tập",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "course_name",
+        "label": "Môn học",
+        "type": "select",
+        "options": [
+          "Lập trình Web",
+          "Cơ sở dữ liệu",
+          "Cấu trúc dữ liệu",
+          "Mạng máy tính"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "deadline",
+        "label": "Hạn chót nộp bài",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "max_score",
+        "label": "Điểm tối đa",
+        "type": "number",
+        "rules": "required|numeric|between:1,10",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Đang mở",
+          "Đã đóng",
+          "Đã chấm điểm"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "content",
+        "label": "Yêu cầu chi tiết bài tập",
+        "type": "textarea",
+        "rules": "required|string|min:10",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "title": "Dữ liệu Tiêu đề bài tập số 1",
+        "course_name": "Lập trình Web",
+        "deadline": "2026-11-11",
+        "max_score": 15,
+        "status": "Đang mở",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 13 - mục #1."
+      },
+      {
+        "title": "Dữ liệu Tiêu đề bài tập số 2",
+        "course_name": "Cơ sở dữ liệu",
+        "deadline": "2026-11-12",
+        "max_score": 20,
+        "status": "Đã đóng",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 13 - mục #2."
+      },
+      {
+        "title": "Dữ liệu Tiêu đề bài tập số 3",
+        "course_name": "Cấu trúc dữ liệu",
+        "deadline": "2026-11-13",
+        "max_score": 25,
+        "status": "Đã chấm điểm",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 13 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 13. Hệ thống quản lý bài tập trực tuyến \n- Mô tả tình huống:  Giảng viên cần tạo bài tập gồm tiêu đề, nội dung, hạn nộp và tệp \nđính kèm. Sinh viên xem bài tập; giảng viên quản lý nội dung và tài liệu. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và thiết lập cơ sở dữ liệu cho bài tập trực tuyến. \nCâu 2. Khai báo Route cho danh sách bài tập, chi tiết, tạo mới và cập nhật bài tập. \nCâu 3. Tạo AssignmentController xử lý danh sách, chi tiết và tạo bài tập. \nCâu 4. Xây dựng View Blade hiển thị nội dung, hạn nộp và liên kết tải tệp đính kèm. \nCâu 5. Validation tiêu đề và nội dung bắt buộc, hạn nộp hợp lệ, tệp đúng định dạng và \ndung lượng quy định. \nCâu 6. Tạo Migration, Model Assignment; triển khai CRUD bằng Eloquent. \nCâu 7. Lưu tệp bằng File Storage; sử dụng Query Builder lọc bài tập theo hạn nộp. \nCâu 8. Bảo vệ chức năng tạo và cập nhật bằng Middleware; kiểm thử quyền truy cập và \nxử lý tệp không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 14,
+    "num_str": "14",
+    "title": "Hệ thống quản lý kho hàng",
+    "desc": "Doanh nghiệp cần quản lý mặt hàng gồm mã hàng, tên hàng, số  lượng tồn, đơn giá và vị trí lưu kho. Nhân viên kho cập nhật số lượng; người xem chỉ  tra cứu thông tin.",
+    "db_name": "db_bai14",
+    "model": "InventoryItem",
+    "table": "inventory_items",
+    "controller": "Bai14Controller",
+    "fields": [
+      {
+        "name": "item_code",
+        "label": "Mã hàng tồn kho",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "item_name",
+        "label": "Tên mặt hàng",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "warehouse_location",
+        "label": "Vị trí kho",
+        "type": "select",
+        "options": [
+          "Kho Tổng A",
+          "Kho B - Phía Đông",
+          "Kho C - Dự phòng",
+          "Kho Lạnh"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "quantity",
+        "label": "Số lượng tồn",
+        "type": "number",
+        "rules": "required|integer|min:0",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "unit_price",
+        "label": "Đơn giá nhập (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "notes",
+        "label": "Ghi chú",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "item_code": "INV-1401",
+        "item_name": "Tên mặt hàng mẫu #1",
+        "warehouse_location": "Kho Tổng A",
+        "quantity": 15,
+        "unit_price": 150000,
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 14 - mục #1."
+      },
+      {
+        "item_code": "INV-1402",
+        "item_name": "Tên mặt hàng mẫu #2",
+        "warehouse_location": "Kho B - Phía Đông",
+        "quantity": 20,
+        "unit_price": 300000,
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 14 - mục #2."
+      },
+      {
+        "item_code": "INV-1403",
+        "item_name": "Tên mặt hàng mẫu #3",
+        "warehouse_location": "Kho C - Dự phòng",
+        "quantity": 25,
+        "unit_price": 450000,
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 14 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 14. Hệ thống quản lý kho hàng \n- Mô tả tình huống:  Doanh nghiệp cần quản lý mặt hàng gồm mã hàng, tên hàng, số \nlượng tồn, đơn giá và vị trí lưu kho. Nhân viên kho cập nhật số lượng; người xem chỉ \ntra cứu thông tin. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel, cấu hình cơ sở dữ liệu và xác định cấu trúc mã nguồn. \nCâu 2. Khai báo Route cho danh sách mặt hàng, chi tiết, tạo mới và cập nhật số lượng tồn \nkho. \nCâu 3. Tạo InventoryController xử lý danh sách và chi tiết mặt hàng. \nCâu 4. Xây dựng View Blade hiển thị số lượng tồn và cảnh báo mặt hàng có tồn kho thấp. \nCâu 5. Validation mã hàng duy nhất, tên bắt buộc, số lượng không âm và đơn giá lớn hơn \n0. \nCâu 6. Tạo Migration, Model InventoryItem; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder tìm mặt hàng theo mã hoặc tên, lọc hàng dưới ngưỡng tồn \nkho. \nCâu 8. Bảo vệ chức năng cập nhật kho bằng Middleware; kiểm thử trường hợp số lượng \nâm và dữ liệu mã hàng trùng. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 15,
+    "num_str": "15",
+    "title": "Hệ thống quản lý phản hồi khách hàng",
+    "desc": "Doanh nghiệp cần tiếp nhận phản hồi gồm họ tên, email, chủ đề,  nội dung và trạng thái xử lý. Khách gửi phản hồi; nhân viên đăng nhập để xem và cập  nhật trạng thái.",
+    "db_name": "db_bai15",
+    "model": "Feedback",
+    "table": "feedbacks",
+    "controller": "Bai15Controller",
+    "fields": [
+      {
+        "name": "fullname",
+        "label": "Họ và tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "email",
+        "label": "Email liên lạc",
+        "type": "email",
+        "rules": "required|email",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "subject",
+        "label": "Chủ đề phản hồi",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "rating",
+        "label": "Đánh giá sao",
+        "type": "select",
+        "options": [
+          "1 Sao",
+          "2 Sao",
+          "3 Sao",
+          "4 Sao",
+          "5 Sao"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái xử lý",
+        "type": "select",
+        "options": [
+          "Chờ tiếp nhận",
+          "Đang xử lý",
+          "Đã phản hồi",
+          "Đã đóng"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "content",
+        "label": "Nội dung phản hồi",
+        "type": "textarea",
+        "rules": "required|string|min:5",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "fullname": "Họ và tên khách hàng mẫu #1",
+        "email": "user15_1@example.com",
+        "subject": "Dữ liệu Chủ đề phản hồi số 1",
+        "rating": "1 Sao",
+        "status": "Chờ tiếp nhận",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 15 - mục #1."
+      },
+      {
+        "fullname": "Họ và tên khách hàng mẫu #2",
+        "email": "user15_2@example.com",
+        "subject": "Dữ liệu Chủ đề phản hồi số 2",
+        "rating": "2 Sao",
+        "status": "Đang xử lý",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 15 - mục #2."
+      },
+      {
+        "fullname": "Họ và tên khách hàng mẫu #3",
+        "email": "user15_3@example.com",
+        "subject": "Dữ liệu Chủ đề phản hồi số 3",
+        "rating": "3 Sao",
+        "status": "Đã phản hồi",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 15 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 15. Hệ thống quản lý phản hồi khách hàng \n- Mô tả tình huống:  Doanh nghiệp cần tiếp nhận phản hồi gồm họ tên, email, chủ đề, \nnội dung và trạng thái xử lý. Khách gửi phản hồi; nhân viên đăng nhập để xem và cập \nnhật trạng thái. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho biểu mẫu gửi phản hồi, lưu phản hồi, danh sách phản hồi và \ncập nhật trạng thái. \nCâu 3. Tạo FeedbackController xử lý tiếp nhận và hiển thị phản hồi. \nCâu 4. Xây dựng View Blade cho biểu mẫu gửi phản hồi và danh sách phản hồi quản trị. \nCâu 5. Validation email hợp lệ, chủ đề và nội dung bắt buộc; trạng thái chỉ nhận giá trị \nđược phép. \nCâu 6. Tạo Migration, Model Feedback; lưu và truy vấn phản hồi bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc phản hồi theo trạng thái và thời điểm gửi. \nCâu 8. Áp dụng Middleware bảo vệ trang quản trị; kiểm thử gửi phản hồi, cập nhật trạng \nthái và truy cập khi chưa đăng nhập. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 16,
+    "num_str": "16",
+    "title": "Hệ thống quản lý danh mục sản phẩm",
+    "desc": "Cửa hàng cần quản lý danh mục sản phẩm gồm tên danh mục, mô  tả và trạng thái. Mỗi danh mục có thể chứa nhiều sản phẩm; danh mục đang được sử  dụng không được xóa tùy tiện.",
+    "db_name": "db_bai16",
+    "model": "Category",
+    "table": "categories",
+    "controller": "Bai16Controller",
+    "fields": [
+      {
+        "name": "category_code",
+        "label": "Mã danh mục",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "name",
+        "label": "Tên danh mục",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "display_order",
+        "label": "Thứ tự hiển thị",
+        "type": "number",
+        "rules": "required|integer|min:1",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Hoạt động",
+          "Tạm dừng"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Mô tả danh mục",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "category_code": "CAT-1601",
+        "name": "Tên danh mục mẫu #1",
+        "display_order": 15,
+        "status": "Hoạt động",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 16 - mục #1."
+      },
+      {
+        "category_code": "CAT-1602",
+        "name": "Tên danh mục mẫu #2",
+        "display_order": 20,
+        "status": "Tạm dừng",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 16 - mục #2."
+      },
+      {
+        "category_code": "CAT-1603",
+        "name": "Tên danh mục mẫu #3",
+        "display_order": 25,
+        "status": "Hoạt động",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 16 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 16. Hệ thống quản lý danh mục sản phẩm \n- Mô tả tình huống: Cửa hàng cần quản lý danh mục sản phẩm gồm tên danh mục, mô \ntả và trạng thái. Mỗi danh mục có thể chứa nhiều sản phẩm; danh mục đang được sử \ndụng không được xóa tùy tiện. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và thiết lập cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách danh mục, tạo, lưu, chỉnh sửa và cập nhật danh mục. \nCâu 3. Tạo CategoryController xử lý danh sách và chi tiết danh mục. \nCâu 4. Xây dựng giao diện Blade hiển thị danh mục và trạng thái hoạt động. \nCâu 5. Validation tên danh mục bắt buộc, giới hạn độ dài và kiểm tra tính duy nhất. \nCâu 6. Tạo Migration, Model Category; xây dựng quan hệ một-nhiều với Model Product \nvà triển khai truy vấn danh mục cùng sản phẩm. \nCâu 7. Sử dụng Query Builder thống kê số sản phẩm thuộc từng danh mục. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm tra điều kiện trước khi xóa danh \nmục có sản phẩm liên quan. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 17,
+    "num_str": "17",
+    "title": "Hệ thống quản lý nhà cung cấp",
+    "desc": "Doanh nghiệp cần lưu thông tin nhà cung cấp gồm mã, tên, email,  số điện thoại, địa chỉ và trạng thái hợp tác. Nhân viên mua hàng quản lý thông tin và  tra cứu nhà cung cấp.",
+    "db_name": "db_bai17",
+    "model": "Supplier",
+    "table": "suppliers",
+    "controller": "Bai17Controller",
+    "fields": [
+      {
+        "name": "supplier_code",
+        "label": "Mã nhà cung cấp",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "name",
+        "label": "Tên nhà cung cấp",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "phone",
+        "label": "Số điện thoại",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "email",
+        "label": "Email liên hệ",
+        "type": "email",
+        "rules": "required|email",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "address",
+        "label": "Địa chỉ",
+        "type": "text",
+        "rules": "required|string|max:255",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "cooperation_status",
+        "label": "Trạng thái hợp tác",
+        "type": "select",
+        "options": [
+          "Đang hợp tác",
+          "Tạm ngưng",
+          "Ngừng hợp tác"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "supplier_code": "SUP-1701",
+        "name": "Tên nhà cung cấp mẫu #1",
+        "phone": "0917888019",
+        "email": "user17_1@example.com",
+        "address": "12 Đường Lê Lợi, Quận 1, TP.HCM",
+        "cooperation_status": "Đang hợp tác"
+      },
+      {
+        "supplier_code": "SUP-1702",
+        "name": "Tên nhà cung cấp mẫu #2",
+        "phone": "0917888029",
+        "email": "user17_2@example.com",
+        "address": "24 Đường Lê Lợi, Quận 2, TP.HCM",
+        "cooperation_status": "Tạm ngưng"
+      },
+      {
+        "supplier_code": "SUP-1703",
+        "name": "Tên nhà cung cấp mẫu #3",
+        "phone": "0917888039",
+        "email": "user17_3@example.com",
+        "address": "36 Đường Lê Lợi, Quận 3, TP.HCM",
+        "cooperation_status": "Ngừng hợp tác"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 17. Hệ thống quản lý nhà cung cấp \n- Mô tả tình huống: Doanh nghiệp cần lưu thông tin nhà cung cấp gồm mã, tên, email, \nsố điện thoại, địa chỉ và trạng thái hợp tác. Nhân viên mua hàng quản lý thông tin và \ntra cứu nhà cung cấp. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách, chi tiết, tạo mới và cập nhật nhà cung cấp. \nCâu 3. Tạo SupplierController xử lý danh sách và chi tiết nhà cung cấp. \nCâu 4. Xây dựng giao diện Blade hiển thị thông tin nhà cung cấp và trạng thái hợp tác. \nCâu 5. Validation mã nhà cung cấp duy nhất, tên bắt buộc, email đúng định dạng và số \nđiện thoại không để trống. \nCâu 6. Tạo Migration, Model Supplier; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder tìm kiếm nhà cung cấp theo tên, email hoặc trạng thái. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản lý; kiểm thử trùng mã và cập nhật \nthông tin nhà cung cấp. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 18,
+    "num_str": "18",
+    "title": "Hệ thống quản lý phiếu bảo hành",
+    "desc": "Trung tâm bảo hành cần quản lý phiếu bảo hành gồm mã phiếu, sản  phẩm, khách hàng, ngày tiếp nhận và trạng thái xử lý. Nhân viên cập nhật tiến độ bảo  hành.",
+    "db_name": "db_bai18",
+    "model": "Warranty",
+    "table": "warranties",
+    "controller": "Bai18Controller",
+    "fields": [
+      {
+        "name": "warranty_code",
+        "label": "Mã phiếu bảo hành",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "product_name",
+        "label": "Tên sản phẩm",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "customer_name",
+        "label": "Tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "received_date",
+        "label": "Ngày tiếp nhận",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tiến độ bảo hành",
+        "type": "select",
+        "options": [
+          "Tiếp nhận",
+          "Đang sửa chữa",
+          "Chờ linh kiện",
+          "Đã hoàn thành",
+          "Đã trả khách"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "issue_description",
+        "label": "Mô tả lỗi sản phẩm",
+        "type": "textarea",
+        "rules": "required|string|min:5",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "warranty_code": "WAR-1801",
+        "product_name": "Tên sản phẩm mẫu #1",
+        "customer_name": "Tên khách hàng mẫu #1",
+        "received_date": "2026-11-11",
+        "status": "Tiếp nhận",
+        "issue_description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 18 - mục #1."
+      },
+      {
+        "warranty_code": "WAR-1802",
+        "product_name": "Tên sản phẩm mẫu #2",
+        "customer_name": "Tên khách hàng mẫu #2",
+        "received_date": "2026-11-12",
+        "status": "Đang sửa chữa",
+        "issue_description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 18 - mục #2."
+      },
+      {
+        "warranty_code": "WAR-1803",
+        "product_name": "Tên sản phẩm mẫu #3",
+        "customer_name": "Tên khách hàng mẫu #3",
+        "received_date": "2026-11-13",
+        "status": "Chờ linh kiện",
+        "issue_description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 18 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 18. Hệ thống quản lý phiếu bảo hành \n- Mô tả tình huống: Trung tâm bảo hành cần quản lý phiếu bảo hành gồm mã phiếu, sản \nphẩm, khách hàng, ngày tiếp nhận và trạng thái xử lý. Nhân viên cập nhật tiến độ bảo \nhành. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và thiết lập cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách phiếu, tạo phiếu, chi tiết và cập nhật trạng thái. \nCâu 3. Tạo WarrantyController xử lý danh sách và chi tiết phiếu bảo hành. \nCâu 4. Tạo View Blade hiển thị mã phiếu, sản phẩm, khách hàng và trạng thái. \nCâu 5. Validation mã phiếu duy nhất, thông tin khách hàng bắt buộc, ngày tiếp nhận hợp \nlệ và trạng thái được phép. \nCâu 6. Tạo Migration, Model Warranty; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc phiếu theo trạng thái và thời gian tiếp nhận. \nCâu 8. Bảo vệ chức năng cập nhật bằng Middleware; kiểm thử chuyển trạng thái và xử lý \nyêu cầu không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 19,
+    "num_str": "19",
+    "title": "Hệ thống quản lý tuyển dụng",
+    "desc": "Doanh nghiệp cần quản lý tin tuyển dụng gồm chức danh, mô tả,  mức lương, hạn ứng tuyển và trạng thái. Ứng viên xem tin; nhân viên nhân sự quản lý  nội dung.",
+    "db_name": "db_bai19",
+    "model": "Job",
+    "table": "jobs",
+    "controller": "Bai19Controller",
+    "fields": [
+      {
+        "name": "job_title",
+        "label": "Chức danh tuyển dụng",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "department",
+        "label": "Phòng ban / Đội ngũ",
+        "type": "select",
+        "options": [
+          "Công nghệ",
+          "Kinh doanh",
+          "Nhân sự",
+          "Tài chính"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "salary_range",
+        "label": "Mức lương đề xuất",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "deadline",
+        "label": "Hạn nộp hồ sơ",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái tin",
+        "type": "select",
+        "options": [
+          "Đang nhận hồ sơ",
+          "Đang phỏng vấn",
+          "Đã tuyển đủ"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "requirements",
+        "label": "Yêu cầu ứng viên",
+        "type": "textarea",
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "job_title": "Dữ liệu Chức danh tuyển dụng số 1",
+        "department": "Công nghệ",
+        "salary_range": "Dữ liệu Mức lương đề xuất số 1",
+        "deadline": "2026-11-11",
+        "status": "Đang nhận hồ sơ",
+        "requirements": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 19 - mục #1."
+      },
+      {
+        "job_title": "Dữ liệu Chức danh tuyển dụng số 2",
+        "department": "Kinh doanh",
+        "salary_range": "Dữ liệu Mức lương đề xuất số 2",
+        "deadline": "2026-11-12",
+        "status": "Đang phỏng vấn",
+        "requirements": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 19 - mục #2."
+      },
+      {
+        "job_title": "Dữ liệu Chức danh tuyển dụng số 3",
+        "department": "Nhân sự",
+        "salary_range": "Dữ liệu Mức lương đề xuất số 3",
+        "deadline": "2026-11-13",
+        "status": "Đã tuyển đủ",
+        "requirements": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 19 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 19. Hệ thống quản lý tuyển dụng \nTên dự án: RecruitmentManager \n- Mô tả tình huống:  Doanh nghiệp cần quản lý tin tuyển dụng gồm chức danh, mô tả, \nmức lương, hạn ứng tuyển và trạng thái. Ứng viên xem tin; nhân viên nhân sự quản lý \nnội dung. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách tin tuyển dụng, chi tiết, tạo mới và cập nhật tin. \nCâu 3. Tạo JobController xử lý danh sách và chi tiết tin tuyển dụng. \nCâu 4. Xây dựng View Blade hiển thị chức danh, mức lương, hạn ứng tuyển và trạng thái. \nCâu 5. Validation chức danh và mô tả bắt buộc, mức lương không âm, hạn ứng tuyển hợp \nlệ. \nCâu 6. Tạo Migration, Model Job; triển khai CRUD bằng Eloquent ORM. \nCâu 7. Sử dụng Query Builder lọc tin đang tuyển dụng và tìm kiếm theo chức danh. \nCâu 8. Áp dụng Middleware bảo vệ trang quản trị; kiểm thử tin hết hạn và quyền cập nhật \ntin tuyển dụng. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 20,
+    "num_str": "20",
+    "title": "Hệ thống quản lý hóa đơn",
+    "desc": "Doanh nghiệp cần quản lý hóa đơn gồm mã hóa đơn, khách hàng,  ngày lập, tổng tiền và trạng thái thanh toán. Nhân viên kế toán tạo và cập nhật hóa đơn.",
+    "db_name": "db_bai20",
+    "model": "Invoice",
+    "table": "invoices",
+    "controller": "Bai20Controller",
+    "fields": [
+      {
+        "name": "invoice_code",
+        "label": "Mã hóa đơn",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "customer_name",
+        "label": "Tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "created_date",
+        "label": "Ngày lập hóa đơn",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "total_amount",
+        "label": "Tổng tiền thanh toán (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "payment_status",
+        "label": "Trạng thái thanh toán",
+        "type": "select",
+        "options": [
+          "Chưa thanh toán",
+          "Đã thanh toán một phần",
+          "Đã thanh toán đầy đủ",
+          "Đã hủy"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "notes",
+        "label": "Ghi chú hóa đơn",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "invoice_code": "INV-2001",
+        "customer_name": "Tên khách hàng mẫu #1",
+        "created_date": "2026-11-11",
+        "total_amount": 150000,
+        "payment_status": "Chưa thanh toán",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 20 - mục #1."
+      },
+      {
+        "invoice_code": "INV-2002",
+        "customer_name": "Tên khách hàng mẫu #2",
+        "created_date": "2026-11-12",
+        "total_amount": 300000,
+        "payment_status": "Đã thanh toán một phần",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 20 - mục #2."
+      },
+      {
+        "invoice_code": "INV-2003",
+        "customer_name": "Tên khách hàng mẫu #3",
+        "created_date": "2026-11-13",
+        "total_amount": 450000,
+        "payment_status": "Đã thanh toán đầy đủ",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 20 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 20. Hệ thống quản lý hóa đơn \n- Mô tả tình huống:  Doanh nghiệp cần quản lý hóa đơn gồm mã hóa đơn, khách hàng, \nngày lập, tổng tiền và trạng thái thanh toán. Nhân viên kế toán tạo và cập nhật hóa đơn. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình kết nối MySQL. \nCâu 2. Khai báo Route cho danh sách hóa đơn, tạo mới, xem chi tiết và cập nhật trạng thái \nthanh toán. \nCâu 3. Tạo InvoiceController xử lý danh sách, chi tiết và tạo hóa đơn. \nCâu 4. Xây dựng giao diện Blade hiển thị mã hóa đơn, khách hàng, tổng tiền và trạng thái \nthanh toán. \nCâu 5. Validation mã hóa đơn duy nhất, khách hàng bắt buộc, tổng tiền không âm và trạng \nthái hợp lệ. \nCâu 6. Tạo Migration, Model Invoice; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc hóa đơn theo trạng thái thanh toán và khoảng ngày lập. \nCâu 8. Bảo vệ các Route kế toán bằng Middleware; kiểm thử cập nhật trạng thái và trường \nhợp gửi dữ liệu không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 21,
+    "num_str": "21",
+    "title": "Hệ thống quản lý bài đăng tuyển cộng tác viên",
+    "desc": "Một đơn vị cần đăng thông tin tuyển cộng tác viên gồm vị trí, mô  tả công việc, thù lao và hạn đăng ký. Người xem có thể tra cứu; quản trị viên quản lý  bài đăng.",
+    "db_name": "db_bai21",
+    "model": "CollaboratorPost",
+    "table": "collaborator_posts",
+    "controller": "Bai21Controller",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Tiêu đề tin tuyển CTV",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "position",
+        "label": "Vị trí CTV",
+        "type": "select",
+        "options": [
+          "Viết bài Content",
+          "Thiết kế đồ họa",
+          "Dịch thuật",
+          "Hỗ trợ khách hàng"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "compensation",
+        "label": "Mức thù lao / sản phẩm",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "deadline",
+        "label": "Hạn ứng tuyển",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Đang tuyển",
+          "Tạm dừng",
+          "Đã kết thúc"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "details",
+        "label": "Mô tả công việc",
+        "type": "textarea",
+        "rules": "required|string|min:10",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "title": "Dữ liệu Tiêu đề tin tuyển CTV số 1",
+        "position": "Viết bài Content",
+        "compensation": "Dữ liệu Mức thù lao / sản phẩm số 1",
+        "deadline": "2026-11-11",
+        "status": "Đang tuyển",
+        "details": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 21 - mục #1."
+      },
+      {
+        "title": "Dữ liệu Tiêu đề tin tuyển CTV số 2",
+        "position": "Thiết kế đồ họa",
+        "compensation": "Dữ liệu Mức thù lao / sản phẩm số 2",
+        "deadline": "2026-11-12",
+        "status": "Tạm dừng",
+        "details": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 21 - mục #2."
+      },
+      {
+        "title": "Dữ liệu Tiêu đề tin tuyển CTV số 3",
+        "position": "Dịch thuật",
+        "compensation": "Dữ liệu Mức thù lao / sản phẩm số 3",
+        "deadline": "2026-11-13",
+        "status": "Đã kết thúc",
+        "details": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 21 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 21. Hệ thống quản lý bài đăng tuyển cộng tác viên \n- Mô tả tình huống:  Một đơn vị cần đăng thông tin tuyển cộng tác viên gồm vị trí, mô \ntả công việc, thù lao và hạn đăng ký. Người xem có thể tra cứu; quản trị viên quản lý \nbài đăng. \n- Yêu cầu: \nCâu 1. Khởi tạo ứng dụng Laravel và thiết lập cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách bài đăng, chi tiết, tạo mới và cập nhật bài đăng. \nCâu 3. Tạo CollaboratorPostController xử lý danh sách và chi tiết bài đăng. \nCâu 4. Tạo View Blade hiển thị vị trí, thù lao và hạn đăng ký. \nCâu 5. Validation vị trí bắt buộc, thù lao không âm, hạn đăng ký hợp lệ. \nCâu 6. Tạo Migration, Model CollaboratorPost; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc bài đăng còn hạn và sắp xếp theo hạn đăng ký. \nCâu 8. Áp dụng Middleware cho quản trị viên; kiểm thử bài đăng hết hạn và cập nhật trạng \nthái hiển thị. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 22,
+    "num_str": "22",
+    "title": "Hệ thống quản lý tài liệu nội bộ",
+    "desc": "Doanh nghiệp cần lưu tài liệu gồm tiêu đề, mô tả, tên tệp, người tải  lên và ngày cập nhật. Nhân viên được xem tài liệu theo quyền; quản trị viên được tải  lên và cập nhật tài liệu.",
+    "db_name": "db_bai22",
+    "model": "Document",
+    "table": "documents",
+    "controller": "Bai22Controller",
+    "fields": [
+      {
+        "name": "doc_code",
+        "label": "Mã số tài liệu",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "title",
+        "label": "Tên tài liệu",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "category",
+        "label": "Danh mục tài liệu",
+        "type": "select",
+        "options": [
+          "Quy chế nội bộ",
+          "Tài liệu kỹ thuật",
+          "Báo cáo tài chính",
+          "Biểu mẫu hành chính"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "author",
+        "label": "Người biên soạn",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "security_level",
+        "label": "Mức độ bảo mật",
+        "type": "select",
+        "options": [
+          "Công khai",
+          "Nội bộ công ty",
+          "Bảo mật cao"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "summary",
+        "label": "Tóm tắt tài liệu",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "doc_code": "DOC-2201",
+        "title": "Dữ liệu Tên tài liệu số 1",
+        "category": "Quy chế nội bộ",
+        "author": "Dữ liệu Người biên soạn số 1",
+        "security_level": "Công khai",
+        "summary": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 22 - mục #1."
+      },
+      {
+        "doc_code": "DOC-2202",
+        "title": "Dữ liệu Tên tài liệu số 2",
+        "category": "Tài liệu kỹ thuật",
+        "author": "Dữ liệu Người biên soạn số 2",
+        "security_level": "Nội bộ công ty",
+        "summary": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 22 - mục #2."
+      },
+      {
+        "doc_code": "DOC-2203",
+        "title": "Dữ liệu Tên tài liệu số 3",
+        "category": "Báo cáo tài chính",
+        "author": "Dữ liệu Người biên soạn số 3",
+        "security_level": "Bảo mật cao",
+        "summary": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 22 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 22. Hệ thống quản lý tài liệu nội bộ \n- Mô tả tình huống: Doanh nghiệp cần lưu tài liệu gồm tiêu đề, mô tả, tên tệp, người tải \nlên và ngày cập nhật. Nhân viên được xem tài liệu theo quyền; quản trị viên được tải \nlên và cập nhật tài liệu. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel, cấu hình cơ sở dữ liệu và kiểm tra môi trường chạy ứng dụng. \nCâu 2. Khai báo Route cho danh sách tài liệu, tải lên, chi tiết, cập nhật và tải xuống tài \nliệu. \nCâu 3. Tạo DocumentController xử lý danh sách và chi tiết tài liệu. \nCâu 4. Xây dựng View Blade hiển thị tiêu đề, người tải lên và liên kết tải tài liệu. \nCâu 5. Validation tiêu đề bắt buộc; tệp đúng định dạng, dung lượng và điều kiện tải lên. \nCâu 6. Tạo Migration, Model Document; lưu thông tin tài liệu bằng Eloquent. \nCâu 7. Lưu tệp bằng File Storage và sử dụng Query Builder tìm tài liệu theo tiêu đề. \nCâu 8. Bảo vệ tài liệu nội bộ bằng Middleware và kiểm tra quyền tải xuống, tránh cho \nngười chưa được cấp quyền truy cập tệp. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 23,
+    "num_str": "23",
+    "title": "Hệ thống quản lý lịch làm việc",
+    "desc": "Doanh nghiệp cần quản lý lịch làm việc gồm nhân viên, ngày làm,  giờ bắt đầu, giờ kết thúc và ghi chú. Quản lý phân công lịch; nhân viên xem lịch của  mình.",
+    "db_name": "db_bai23",
+    "model": "WorkSchedule",
+    "table": "work_schedules",
+    "controller": "Bai23Controller",
+    "fields": [
+      {
+        "name": "employee_name",
+        "label": "Tên nhân viên",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "shift",
+        "label": "Ca làm việc",
+        "type": "select",
+        "options": [
+          "Ca sáng (06:00 - 14:00)",
+          "Ca chiều (14:00 - 22:00)",
+          "Ca đêm (22:00 - 06:00)",
+          "Ca hành chính"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "work_date",
+        "label": "Ngày làm việc",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "workstation",
+        "label": "Khu vực / Bàn làm việc",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái điểm danh",
+        "type": "select",
+        "options": [
+          "Đã lên lịch",
+          "Có mặt",
+          "Đi muộn",
+          "Vắng mặt"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "notes",
+        "label": "Ghi chú bàn giao",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "employee_name": "Tên nhân viên mẫu #1",
+        "shift": "Ca sáng (06:00 - 14:00)",
+        "work_date": "2026-11-11",
+        "workstation": "Dữ liệu Khu vực / Bàn làm việc số 1",
+        "status": "Đã lên lịch",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 23 - mục #1."
+      },
+      {
+        "employee_name": "Tên nhân viên mẫu #2",
+        "shift": "Ca chiều (14:00 - 22:00)",
+        "work_date": "2026-11-12",
+        "workstation": "Dữ liệu Khu vực / Bàn làm việc số 2",
+        "status": "Có mặt",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 23 - mục #2."
+      },
+      {
+        "employee_name": "Tên nhân viên mẫu #3",
+        "shift": "Ca đêm (22:00 - 06:00)",
+        "work_date": "2026-11-13",
+        "workstation": "Dữ liệu Khu vực / Bàn làm việc số 3",
+        "status": "Đi muộn",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 23 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 23. Hệ thống quản lý lịch làm việc \n- Mô tả tình huống: Doanh nghiệp cần quản lý lịch làm việc gồm nhân viên, ngày làm, \ngiờ bắt đầu, giờ kết thúc và ghi chú. Quản lý phân công lịch; nhân viên xem lịch của \nmình. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách lịch, tạo lịch, chi tiết và cập nhật lịch làm việc. \nCâu 3. Tạo WorkScheduleController xử lý danh sách và tạo lịch. \nCâu 4. Xây dựng View Blade hiển thị lịch làm việc theo ngày và nhân viên. \nCâu 5. Validation ngày làm, giờ bắt đầu, giờ kết thúc và kiểm tra giờ kết thúc sau giờ bắt \nđầu. \nCâu 6. Tạo Migration, Model WorkSchedule; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc lịch theo nhân viên và khoảng ngày. \nCâu 8. Áp dụng Middleware yêu cầu đăng nhập; kiểm tra nhân viên chỉ xem lịch được \nphép và quản lý có quyền cập nhật lịch. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 24,
+    "num_str": "24",
+    "title": "Hệ thống quản lý thiết bị",
+    "desc": "Trường học cần quản lý thiết bị gồm mã thiết bị, tên, phòng sử dụng,  ngày mua và trạng thái. Nhân viên quản trị thiết bị có thể cập nhật tình trạng sử dụng.",
+    "db_name": "db_bai24",
+    "model": "Equipment",
+    "table": "equipments",
+    "controller": "Bai24Controller",
+    "fields": [
+      {
+        "name": "equipment_code",
+        "label": "Mã thiết bị",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "name",
+        "label": "Tên thiết bị",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "category",
+        "label": "Phân loại",
+        "type": "select",
+        "options": [
+          "Máy tính văn phòng",
+          "Máy in / Scan",
+          "Thiết bị mạng",
+          "Máy chiếu hội trường"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "purchase_date",
+        "label": "Ngày bàn giao",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "condition_status",
+        "label": "Tình trạng sử dụng",
+        "type": "select",
+        "options": [
+          "Hoạt động tốt",
+          "Cần bảo dưỡng",
+          "Hỏng hóc",
+          "Thanh lý"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "notes",
+        "label": "Ghi chú cấu hình",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "equipment_code": "EQU-2401",
+        "name": "Tên thiết bị mẫu #1",
+        "category": "Máy tính văn phòng",
+        "purchase_date": "2026-11-11",
+        "condition_status": "Hoạt động tốt",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 24 - mục #1."
+      },
+      {
+        "equipment_code": "EQU-2402",
+        "name": "Tên thiết bị mẫu #2",
+        "category": "Máy in / Scan",
+        "purchase_date": "2026-11-12",
+        "condition_status": "Cần bảo dưỡng",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 24 - mục #2."
+      },
+      {
+        "equipment_code": "EQU-2403",
+        "name": "Tên thiết bị mẫu #3",
+        "category": "Thiết bị mạng",
+        "purchase_date": "2026-11-13",
+        "condition_status": "Hỏng hóc",
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 24 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 24. Hệ thống quản lý thiết bị \n- Mô tả tình huống: Trường học cần quản lý thiết bị gồm mã thiết bị, tên, phòng sử dụng, \nngày mua và trạng thái. Nhân viên quản trị thiết bị có thể cập nhật tình trạng sử dụng. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách thiết bị, chi tiết, tạo mới và cập nhật thiết bị. \nCâu 3. Tạo EquipmentController xử lý danh sách và chi tiết thiết bị. \nCâu 4. Xây dựng View Blade hiển thị thiết bị và trạng thái sử dụng. \nCâu 5. Validation mã thiết bị duy nhất, tên bắt buộc, ngày mua hợp lệ và trạng thái cho \nphép. \nCâu 6. Tạo Migration, Model Equipment; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc thiết bị theo phòng và trạng thái. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử việc cập nhật trạng thái và \nxử lý mã thiết bị trùng. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 25,
+    "num_str": "25",
+    "title": "Hệ thống quản lý yêu cầu hỗ trợ kỹ thuật",
+    "desc": "Một trung tâm CNTT tiếp nhận yêu cầu hỗ trợ gồm người gửi, tiêu  đề, nội dung, mức độ ưu tiên và trạng thái. Người dùng gửi yêu cầu; nhân viên kỹ thuật  xử lý và cập nhật tiến độ.",
+    "db_name": "db_bai25",
+    "model": "SupportTicket",
+    "table": "support_tickets",
+    "controller": "Bai25Controller",
+    "fields": [
+      {
+        "name": "ticket_code",
+        "label": "Mã yêu cầu hỗ trợ",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "requester_name",
+        "label": "Người yêu cầu",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "issue_type",
+        "label": "Loại sự cố",
+        "type": "select",
+        "options": [
+          "Sự cố phần mềm",
+          "Hỏng phần cứng",
+          "Mất kết nối mạng",
+          "Cấp quyền truy cập"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "priority",
+        "label": "Độ khẩn cấp",
+        "type": "select",
+        "options": [
+          "Thấp",
+          "Trung bình",
+          "Cao",
+          "Khẩn cấp"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "status",
+        "label": "Tiến độ xử lý",
+        "type": "select",
+        "options": [
+          "Mới tiếp nhận",
+          "Đang xử lý",
+          "Chờ phản hồi",
+          "Đã giải quyết"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Chi tiết sự cố",
+        "type": "textarea",
+        "rules": "required|string|min:5",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "ticket_code": "SUP-2501",
+        "requester_name": "Người yêu cầu mẫu #1",
+        "issue_type": "Sự cố phần mềm",
+        "priority": "Thấp",
+        "status": "Mới tiếp nhận",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 25 - mục #1."
+      },
+      {
+        "ticket_code": "SUP-2502",
+        "requester_name": "Người yêu cầu mẫu #2",
+        "issue_type": "Hỏng phần cứng",
+        "priority": "Trung bình",
+        "status": "Đang xử lý",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 25 - mục #2."
+      },
+      {
+        "ticket_code": "SUP-2503",
+        "requester_name": "Người yêu cầu mẫu #3",
+        "issue_type": "Mất kết nối mạng",
+        "priority": "Cao",
+        "status": "Chờ phản hồi",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 25 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 25. Hệ thống quản lý yêu cầu hỗ trợ kỹ thuật \n- Mô tả tình huống: Một trung tâm CNTT tiếp nhận yêu cầu hỗ trợ gồm người gửi, tiêu \nđề, nội dung, mức độ ưu tiên và trạng thái. Người dùng gửi yêu cầu; nhân viên kỹ thuật \nxử lý và cập nhật tiến độ. \n- Yêu cầu: \nCâu 1. Khởi tạo ứng dụng Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho gửi yêu cầu, danh sách yêu cầu, chi tiết và cập nhật trạng thái. \nCâu 3. Tạo SupportTicketController xử lý tiếp nhận và hiển thị yêu cầu hỗ trợ. \nCâu 4. Xây dựng View Blade hiển thị mức ưu tiên và trạng thái xử lý bằng điều kiện. \nCâu 5. Validation tiêu đề, nội dung bắt buộc; mức ưu tiên và trạng thái phải thuộc tập giá \ntrị cho phép. \nCâu 6. Tạo Migration, Model SupportTicket; triển khai lưu, truy vấn và cập nhật bằng \nEloquent. \nCâu 7. Sử dụng Query Builder lọc yêu cầu theo trạng thái, mức ưu tiên và thời gian gửi. \nCâu 8. Bảo vệ chức năng nhân viên kỹ thuật bằng Middleware; kiểm tra quyền cập nhật \nvà luồng xử lý yêu cầu. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 26,
+    "num_str": "26",
+    "title": "Hệ thống quản lý cửa hàng điện thoại",
+    "desc": "Cửa hàng cần quản lý điện thoại gồm tên máy, thương hiệu, giá bán,  số lượng tồn kho và ảnh sản phẩm. Khách xem sản phẩm; nhân viên quản lý danh mục.",
+    "db_name": "db_bai26",
+    "model": "Phone",
+    "table": "phones",
+    "controller": "Bai26Controller",
+    "fields": [
+      {
+        "name": "phone_code",
+        "label": "Mã mẫu máy",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "phone_name",
+        "label": "Tên điện thoại",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "brand",
+        "label": "Hãng sản xuất",
+        "type": "select",
+        "options": [
+          "Apple",
+          "Samsung",
+          "Xiaomi",
+          "OPPO",
+          "Sony"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "price",
+        "label": "Giá niêm yết (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "storage_gb",
+        "label": "Dung lượng bộ nhớ",
+        "type": "select",
+        "options": [
+          "64GB",
+          "128GB",
+          "256GB",
+          "512GB",
+          "1TB"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "stock",
+        "label": "Tồn kho máy mới",
+        "type": "number",
+        "rules": "required|integer|min:0",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "phone_code": "PHO-2601",
+        "phone_name": "Tên điện thoại mẫu #1",
+        "brand": "Apple",
+        "price": 150000,
+        "storage_gb": "64GB",
+        "stock": 15
+      },
+      {
+        "phone_code": "PHO-2602",
+        "phone_name": "Tên điện thoại mẫu #2",
+        "brand": "Samsung",
+        "price": 300000,
+        "storage_gb": "128GB",
+        "stock": 20
+      },
+      {
+        "phone_code": "PHO-2603",
+        "phone_name": "Tên điện thoại mẫu #3",
+        "brand": "Xiaomi",
+        "price": 450000,
+        "storage_gb": "256GB",
+        "stock": 25
+      }
+    ],
+    "full_text": "ĐỀ SỐ 26. Hệ thống quản lý cửa hàng điện thoại \n- Mô tả tình huống: Cửa hàng cần quản lý điện thoại gồm tên máy, thương hiệu, giá bán, \nsố lượng tồn kho và ảnh sản phẩm. Khách xem sản phẩm; nhân viên quản lý danh mục. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel, khởi chạy ứng dụng và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách điện thoại, chi tiết, tạo mới, lưu và cập nhật sản \nphẩm. \nCâu 3. Tạo PhoneController xử lý danh sách, chi tiết và biểu mẫu thêm điện thoại. \nCâu 4. Xây dựng giao diện Blade hiển thị tên máy, thương hiệu, giá bán và ảnh sản phẩm. \nCâu 5. Validation tên máy bắt buộc, giá lớn hơn 0, số lượng tồn không âm và ảnh đúng \nđịnh dạng. \nCâu 6. Tạo Migration, Model Phone; thực hiện CRUD bằng Eloquent ORM. \nCâu 7. Sử dụng File Storage lưu ảnh và Query Builder lọc điện thoại theo thương hiệu, \nkhoảng giá. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản trị; kiểm thử dữ liệu không hợp lệ và \nquyền cập nhật sản phẩm. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 27,
+    "num_str": "27",
+    "title": "Hệ thống quản lý cửa hàng thời trang",
+    "desc": "Cửa hàng cần quản lý quần áo gồm tên sản phẩm, loại trang phục,  kích cỡ, màu sắc, giá và hình ảnh. Khách xem sản phẩm; nhân viên quản lý dữ liệu.",
+    "db_name": "db_bai27",
+    "model": "FashionProduct",
+    "table": "fashion_products",
+    "controller": "Bai27Controller",
+    "fields": [
+      {
+        "name": "product_code",
+        "label": "Mã sản phẩm thời trang",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "name",
+        "label": "Tên trang phục",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "category",
+        "label": "Danh mục",
+        "type": "select",
+        "options": [
+          "Áo sơ mi",
+          "Áo thun",
+          "Quần jean",
+          "Váy đầm",
+          "Áo khoác"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "size",
+        "label": "Kích cỡ (Size)",
+        "type": "select",
+        "options": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL",
+          "Free size"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "price",
+        "label": "Giá bán (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "stock",
+        "label": "Số lượng trong kho",
+        "type": "number",
+        "rules": "required|integer|min:0",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "product_code": "FAS-2701",
+        "name": "Tên trang phục mẫu #1",
+        "category": "Áo sơ mi",
+        "size": "S",
+        "price": 150000,
+        "stock": 15
+      },
+      {
+        "product_code": "FAS-2702",
+        "name": "Tên trang phục mẫu #2",
+        "category": "Áo thun",
+        "size": "M",
+        "price": 300000,
+        "stock": 20
+      },
+      {
+        "product_code": "FAS-2703",
+        "name": "Tên trang phục mẫu #3",
+        "category": "Quần jean",
+        "size": "L",
+        "price": 450000,
+        "stock": 25
+      }
+    ],
+    "full_text": "ĐỀ SỐ 27. Hệ thống quản lý cửa hàng thời trang \n- Mô tả tình huống: Cửa hàng cần quản lý quần áo gồm tên sản phẩm, loại trang phục, \nkích cỡ, màu sắc, giá và hình ảnh. Khách xem sản phẩm; nhân viên quản lý dữ liệu. \n- Yêu cầu: \nCâu 1. Khởi tạo ứng dụng Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách trang phục, chi tiết, tạo mới và cập nhật sản phẩm. \nCâu 3. Tạo FashionProductController xử lý danh sách và chi tiết sản phẩm. \nCâu 4. Xây dựng View Blade hiển thị sản phẩm, kích cỡ, màu sắc và giá bán. \nCâu 5. Validation tên sản phẩm bắt buộc, giá hợp lệ, kích cỡ và màu sắc thuộc các giá trị \nđược chấp nhận. \nCâu 6. Tạo Migration, Model FashionProduct; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng File Storage quản lý ảnh và Query Builder lọc theo loại trang phục, kích \ncỡ, khoảng giá. \nCâu 8. Bảo vệ các Route quản trị bằng Middleware; kiểm thử cập nhật sản phẩm và xử lý \ndữ liệu sai. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 28,
+    "num_str": "28",
+    "title": "Hệ thống quản lý dịch vụ sửa chữa máy tính",
+    "desc": "Cửa hàng sửa chữa máy tính cần quản lý phiếu sửa chữa gồm tên  khách hàng, thiết bị, mô tả lỗi, chi phí dự kiến và trạng thái. Nhân viên cập nhật tình  trạng sửa chữa.",
+    "db_name": "db_bai28",
+    "model": "RepairTicket",
+    "table": "repair_tickets",
+    "controller": "Bai28Controller",
+    "fields": [
+      {
+        "name": "ticket_code",
+        "label": "Mã tiếp nhận sửa chữa",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "customer_name",
+        "label": "Họ tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "device_model",
+        "label": "Tên dòng máy / Laptop",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "estimated_cost",
+        "label": "Chi phí dự kiến (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái sửa chữa",
+        "type": "select",
+        "options": [
+          "Tiếp nhận",
+          "Đang kiểm tra",
+          "Chờ linh kiện thay thế",
+          "Đã sửa xong",
+          "Đã giao máy"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "defect_description",
+        "label": "Triệu chứng lỗi",
+        "type": "textarea",
+        "rules": "required|string|min:5",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "ticket_code": "REP-2801",
+        "customer_name": "Họ tên khách hàng mẫu #1",
+        "device_model": "Dữ liệu Tên dòng máy / Laptop số 1",
+        "estimated_cost": 150000,
+        "status": "Tiếp nhận",
+        "defect_description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 28 - mục #1."
+      },
+      {
+        "ticket_code": "REP-2802",
+        "customer_name": "Họ tên khách hàng mẫu #2",
+        "device_model": "Dữ liệu Tên dòng máy / Laptop số 2",
+        "estimated_cost": 300000,
+        "status": "Đang kiểm tra",
+        "defect_description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 28 - mục #2."
+      },
+      {
+        "ticket_code": "REP-2803",
+        "customer_name": "Họ tên khách hàng mẫu #3",
+        "device_model": "Dữ liệu Tên dòng máy / Laptop số 3",
+        "estimated_cost": 450000,
+        "status": "Chờ linh kiện thay thế",
+        "defect_description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 28 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 28. Hệ thống quản lý dịch vụ sửa chữa máy tính \n- Mô tả tình huống:  Cửa hàng sửa chữa máy tính cần quản lý phiếu sửa chữa gồm tên \nkhách hàng, thiết bị, mô tả lỗi, chi phí dự kiến và trạng thái. Nhân viên cập nhật tình \ntrạng sửa chữa. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel, cấu hình môi trường và kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách phiếu sửa chữa, tạo phiếu, chi tiết và cập nhật trạng \nthái. \nCâu 3. Tạo RepairController xử lý danh sách, chi tiết và tạo phiếu sửa chữa. \nCâu 4. Xây dựng giao diện Blade hiển thị thiết bị, mô tả lỗi, chi phí và trạng thái. \nCâu 5. Validation tên khách hàng, thiết bị và mô tả lỗi bắt buộc; chi phí không âm; trạng \nthái hợp lệ. \nCâu 6. Tạo Migration, Model RepairTicket; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc phiếu theo trạng thái, khoảng ngày tiếp nhận và mức \nchi phí. \nCâu 8. Áp dụng Middleware cho nhân viên; kiểm thử cập nhật trạng thái và ngăn truy cập \nchức năng quản trị khi chưa đăng nhập. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 29,
+    "num_str": "29",
+    "title": "Hệ thống quản lý đăng ký học phần",
+    "desc": "Nhà trường cần quản lý học phần gồm mã học phần, tên học phần,  số tín chỉ và số lượng chỗ. Sinh viên có thể xem danh sách; nhân viên quản lý học phần.",
+    "db_name": "db_bai29",
+    "model": "CourseSection",
+    "table": "course_sections",
+    "controller": "Bai29Controller",
+    "fields": [
+      {
+        "name": "section_code",
+        "label": "Mã lớp học phần",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "course_name",
+        "label": "Tên môn học",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "lecturer",
+        "label": "Giảng viên phụ trách",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "credits",
+        "label": "Số tín chỉ",
+        "type": "number",
+        "rules": "required|integer|between:1,5",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "max_students",
+        "label": "Số lượng SV tối đa",
+        "type": "number",
+        "rules": "required|integer|min:10",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng lớp",
+        "type": "select",
+        "options": [
+          "Đang mở đăng ký",
+          "Đã đủ sĩ số",
+          "Đã đóng lớp"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "section_code": "COU-2901",
+        "course_name": "Tên môn học mẫu #1",
+        "lecturer": "Dữ liệu Giảng viên phụ trách số 1",
+        "credits": 15,
+        "max_students": 15,
+        "status": "Đang mở đăng ký"
+      },
+      {
+        "section_code": "COU-2902",
+        "course_name": "Tên môn học mẫu #2",
+        "lecturer": "Dữ liệu Giảng viên phụ trách số 2",
+        "credits": 20,
+        "max_students": 20,
+        "status": "Đã đủ sĩ số"
+      },
+      {
+        "section_code": "COU-2903",
+        "course_name": "Tên môn học mẫu #3",
+        "lecturer": "Dữ liệu Giảng viên phụ trách số 3",
+        "credits": 25,
+        "max_students": 25,
+        "status": "Đã đóng lớp"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 29. Hệ thống quản lý đăng ký học phần \n- Mô tả tình huống: Nhà trường cần quản lý học phần gồm mã học phần, tên học phần, \nsố tín chỉ và số lượng chỗ. Sinh viên có thể xem danh sách; nhân viên quản lý học phần. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách học phần, chi tiết, tạo mới và cập nhật học phần. \nCâu 3. Tạo CourseRegistrationController xử lý danh sách và chi tiết học phần. \nCâu 4. Xây dựng View Blade hiển thị mã học phần, tên học phần, tín chỉ và số chỗ còn lại. \nCâu 5. Validation mã học phần duy nhất, tên bắt buộc, số tín chỉ và số chỗ là số nguyên \ndương. \nCâu 6. Tạo Migration, Model CourseSection; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder tìm học phần theo tên, số tín chỉ và số chỗ còn lại. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử cập nhật số chỗ và dữ liệu \nđầu vào không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 30,
+    "num_str": "30",
+    "title": "Hệ thống quản lý đăng ký hội thảo",
+    "desc": "",
+    "db_name": "db_bai30",
+    "model": "Workshop",
+    "table": "workshops",
+    "controller": "Bai30Controller",
+    "fields": [
+      {
+        "name": "workshop_name",
+        "label": "Tên hội thảo / Chuyên đề",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "speaker",
+        "label": "Diễn giả chính",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "event_date",
+        "label": "Ngày tổ chức",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "fee",
+        "label": "Phí tham dự (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái đăng ký",
+        "type": "select",
+        "options": [
+          "Mở đăng ký",
+          "Sắp hết chỗ",
+          "Đã đủ người",
+          "Đã kết thúc"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "description",
+        "label": "Nội dung chương trình",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "workshop_name": "Tên hội thảo / Chuyên đề mẫu #1",
+        "speaker": "Dữ liệu Diễn giả chính số 1",
+        "event_date": "2026-11-11",
+        "fee": 15,
+        "status": "Mở đăng ký",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 30 - mục #1."
+      },
+      {
+        "workshop_name": "Tên hội thảo / Chuyên đề mẫu #2",
+        "speaker": "Dữ liệu Diễn giả chính số 2",
+        "event_date": "2026-11-12",
+        "fee": 20,
+        "status": "Sắp hết chỗ",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 30 - mục #2."
+      },
+      {
+        "workshop_name": "Tên hội thảo / Chuyên đề mẫu #3",
+        "speaker": "Dữ liệu Diễn giả chính số 3",
+        "event_date": "2026-11-13",
+        "fee": 25,
+        "status": "Đã đủ người",
+        "description": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 30 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 30. Hệ thống quản lý đăng ký hội thảo \n- Mô tả tình huống: Một đơn vị tổ chức hội thảo cần quản lý hội thảo gồm tên, diễn giả, \nthời gian, địa điểm và số chỗ. Người dùng xem hội thảo; nhân viên quản lý nội dung. \nYêu cầu: \nCâu 1. Tạo ứng dụng Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách hội thảo, chi tiết, tạo mới và cập nhật hội thảo. \nCâu 3. Tạo WorkshopController xử lý danh sách và chi tiết hội thảo. \nCâu 4. Tạo View Blade hiển thị tên hội thảo, diễn giả, thời gian và địa điểm. \nCâu 5. Validation tên, diễn giả và địa điểm bắt buộc; thời gian hợp lệ; số chỗ là số nguyên \ndương. \nCâu 6. Tạo Migration, Model Workshop; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc hội thảo sắp diễn ra và sắp xếp theo thời gian. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản trị; kiểm thử cập nhật thông tin và \nhiển thị hội thảo theo trạng thái. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 31,
+    "num_str": "31",
+    "title": "Hệ thống quản lý công thức nấu ăn",
+    "desc": "Một website ẩm thực cần quản lý công thức gồm tên món, nguyên  liệu, cách chế biến, thời gian nấu và ảnh minh họa. Khách xem công thức; quản trị viên  quản lý nội dung.",
+    "db_name": "db_bai31",
+    "model": "Recipe",
+    "table": "recipes",
+    "controller": "Bai31Controller",
+    "fields": [
+      {
+        "name": "recipe_name",
+        "label": "Tên món ăn / Công thức",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "cuisine_type",
+        "label": "Ẩm thực",
+        "type": "select",
+        "options": [
+          "Món Việt",
+          "Món Á",
+          "Món Âu",
+          "Món Chay",
+          "Làm Bánh"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "cooking_time_minutes",
+        "label": "Thời gian nấu (phút)",
+        "type": "number",
+        "rules": "required|integer|min:1",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "difficulty",
+        "label": "Độ khó",
+        "type": "select",
+        "options": [
+          "Dễ làm",
+          "Trung bình",
+          "Khó"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "ingredients",
+        "label": "Nguyên liệu chính",
+        "type": "textarea",
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "instructions",
+        "label": "Các bước thực hiện",
+        "type": "textarea",
+        "rules": "required|string|min:10",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "recipe_name": "Tên món ăn / Công thức mẫu #1",
+        "cuisine_type": "Món Việt",
+        "cooking_time_minutes": 15,
+        "difficulty": "Dễ làm",
+        "ingredients": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 31 - mục #1.",
+        "instructions": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 31 - mục #1."
+      },
+      {
+        "recipe_name": "Tên món ăn / Công thức mẫu #2",
+        "cuisine_type": "Món Á",
+        "cooking_time_minutes": 20,
+        "difficulty": "Trung bình",
+        "ingredients": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 31 - mục #2.",
+        "instructions": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 31 - mục #2."
+      },
+      {
+        "recipe_name": "Tên món ăn / Công thức mẫu #3",
+        "cuisine_type": "Món Âu",
+        "cooking_time_minutes": 25,
+        "difficulty": "Khó",
+        "ingredients": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 31 - mục #3.",
+        "instructions": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 31 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 31. Hệ thống quản lý công thức nấu ăn \n- Mô tả tình huống: Một website ẩm thực cần quản lý công thức gồm tên món, nguyên \nliệu, cách chế biến, thời gian nấu và ảnh minh họa. Khách xem công thức; quản trị viên \nquản lý nội dung. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách công thức, chi tiết, tạo mới và cập nhật công thức. \nCâu 3. Tạo RecipeController xử lý danh sách và chi tiết công thức. \nCâu 4. Xây dựng View Blade hiển thị nguyên liệu, cách chế biến và thời gian nấu. \nCâu 5. Validation tên món, nguyên liệu và cách chế biến bắt buộc; thời gian nấu là số \ndương. \nCâu 6. Tạo Migration, Model Recipe; triển khai CRUD bằng Eloquent. \nCâu 7. Lưu ảnh bằng File Storage và sử dụng Query Builder tìm công thức theo tên món. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử tải ảnh và cập nhật công \nthức. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 32,
+    "num_str": "32",
+    "title": "Hệ thống quản lý câu hỏi trắc nghiệm",
+    "desc": "Giảng viên cần quản lý câu hỏi gồm nội dung, bốn phương án trả  lời, đáp án đúng và mức độ khó. Sinh viên xem câu hỏi theo chế độ luyện tập; giảng  viên quản lý ngân hàng câu hỏi.",
+    "db_name": "db_bai32",
+    "model": "Question",
+    "table": "questions",
+    "controller": "Bai32Controller",
+    "fields": [
+      {
+        "name": "topic",
+        "label": "Chủ đề câu hỏi",
+        "type": "select",
+        "options": [
+          "Lập trình Web",
+          "Cơ sở dữ liệu",
+          "Giải thuật",
+          "Mạng máy tính"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "question_text",
+        "label": "Nội dung câu hỏi",
+        "type": "textarea",
+        "rules": "required|string|min:10",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "difficulty",
+        "label": "Mức độ",
+        "type": "select",
+        "options": [
+          "Dễ",
+          "Trung bình",
+          "Khó",
+          "Nâng cao"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "correct_answer",
+        "label": "Đáp án chính xác",
+        "type": "select",
+        "options": [
+          "Đáp án A",
+          "Đáp án B",
+          "Đáp án C",
+          "Đáp án D"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "points",
+        "label": "Điểm số",
+        "type": "number",
+        "rules": "required|numeric|between:0.5,10",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "explanation",
+        "label": "Giải thích chi tiết",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "topic": "Lập trình Web",
+        "question_text": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 32 - mục #1.",
+        "difficulty": "Dễ",
+        "correct_answer": "Đáp án A",
+        "points": 15,
+        "explanation": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 32 - mục #1."
+      },
+      {
+        "topic": "Cơ sở dữ liệu",
+        "question_text": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 32 - mục #2.",
+        "difficulty": "Trung bình",
+        "correct_answer": "Đáp án B",
+        "points": 20,
+        "explanation": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 32 - mục #2."
+      },
+      {
+        "topic": "Giải thuật",
+        "question_text": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 32 - mục #3.",
+        "difficulty": "Khó",
+        "correct_answer": "Đáp án C",
+        "points": 25,
+        "explanation": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 32 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 32. Hệ thống quản lý câu hỏi trắc nghiệm \n- Mô tả tình huống:  Giảng viên cần quản lý câu hỏi gồm nội dung, bốn phương án trả \nlời, đáp án đúng và mức độ khó. Sinh viên xem câu hỏi theo chế độ luyện tập; giảng \nviên quản lý ngân hàng câu hỏi. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách câu hỏi, chi tiết, tạo mới và cập nhật câu hỏi. \nCâu 3. Tạo QuestionController xử lý danh sách và chi tiết câu hỏi. \nCâu 4. Xây dựng View Blade hiển thị câu hỏi và bốn phương án bằng vòng lặp. \nCâu 5. Validation nội dung và bốn phương án bắt buộc; đáp án đúng phải thuộc A, B, C \nhoặc D; mức độ khó hợp lệ. \nCâu 6. Tạo Migration, Model Question; thực hiện CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc câu hỏi theo mức độ khó và tìm kiếm nội dung. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản lý câu hỏi; kiểm thử dữ liệu thiếu \nphương án và đáp án không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 33,
+    "num_str": "33",
+    "title": "Hệ thống quản lý dự án phần mềm",
+    "desc": "Một nhóm phát triển cần quản lý dự án gồm tên dự án, mô tả, ngày  bắt đầu, hạn hoàn thành và trạng thái. Trưởng nhóm quản lý dự án; thành viên xem các  dự án được phân công.",
+    "db_name": "db_bai33",
+    "model": "Project",
+    "table": "projects",
+    "controller": "Bai33Controller",
+    "fields": [
+      {
+        "name": "project_name",
+        "label": "Tên dự án phần mềm",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "leader_name",
+        "label": "Trưởng dự án (PM)",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "start_date",
+        "label": "Ngày bắt đầu",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "deadline",
+        "label": "Hạn bàn giao",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "budget",
+        "label": "Ngân sách dự án (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tiến độ dự án",
+        "type": "select",
+        "options": [
+          "Khởi tạo",
+          "Đang phát triển",
+          "Đang kiểm thử (QA)",
+          "Nghiệm thu",
+          "Bảo trì"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "project_name": "Tên dự án phần mềm mẫu #1",
+        "leader_name": "Trưởng dự án (PM) mẫu #1",
+        "start_date": "2026-11-11",
+        "deadline": "2026-11-11",
+        "budget": 150000,
+        "status": "Khởi tạo"
+      },
+      {
+        "project_name": "Tên dự án phần mềm mẫu #2",
+        "leader_name": "Trưởng dự án (PM) mẫu #2",
+        "start_date": "2026-11-12",
+        "deadline": "2026-11-12",
+        "budget": 300000,
+        "status": "Đang phát triển"
+      },
+      {
+        "project_name": "Tên dự án phần mềm mẫu #3",
+        "leader_name": "Trưởng dự án (PM) mẫu #3",
+        "start_date": "2026-11-13",
+        "deadline": "2026-11-13",
+        "budget": 450000,
+        "status": "Đang kiểm thử (QA)"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 33. Hệ thống quản lý dự án phần mềm \n- Mô tả tình huống: Một nhóm phát triển cần quản lý dự án gồm tên dự án, mô tả, ngày \nbắt đầu, hạn hoàn thành và trạng thái. Trưởng nhóm quản lý dự án; thành viên xem các \ndự án được phân công. \n- Yêu cầu: \nCâu 1. Tạo ứng dụng Laravel, thiết lập cơ sở dữ liệu và xác định các thư mục cần thiết. \nCâu 2. Khai báo Route cho danh sách dự án, chi tiết, tạo mới và cập nhật dự án. \nCâu 3. Tạo ProjectController xử lý danh sách và chi tiết dự án. \nCâu 4. Xây dựng View Blade hiển thị thời gian và trạng thái dự án. \nCâu 5. Validation tên dự án bắt buộc, ngày hợp lệ và hạn hoàn thành không trước ngày bắt \nđầu. \nCâu 6. Tạo Migration, Model Project; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc dự án theo trạng thái và hạn hoàn thành. \nCâu 8. Áp dụng Middleware xác thực; kiểm tra quyền của trưởng nhóm khi cập nhật dự \nán và bảo vệ dữ liệu quản trị. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 34,
+    "num_str": "34",
+    "title": "Hệ thống quản lý khách hàng",
+    "desc": "Bộ phận kinh doanh cần quản lý khách hàng gồm họ tên, email, số  điện thoại, địa chỉ và nguồn khách hàng. Nhân viên kinh doanh tra cứu, thêm mới và  cập nhật hồ sơ.",
+    "db_name": "db_bai34",
+    "model": "Customer",
+    "table": "customers",
+    "controller": "Bai34Controller",
+    "fields": [
+      {
+        "name": "fullname",
+        "label": "Họ tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "phone",
+        "label": "Số điện thoại",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "rules": "required|email",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "customer_source",
+        "label": "Nguồn khách hàng",
+        "type": "select",
+        "options": [
+          "Facebook Ads",
+          "Google Search",
+          "Giới thiệu bạn bè",
+          "Hội thảo trực tiếp"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "status",
+        "label": "Phân loại khách hàng",
+        "type": "select",
+        "options": [
+          "Khách hàng tiềm năng",
+          "Đang tư vấn",
+          "Đã ký hợp đồng",
+          "Khách VIP"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "address",
+        "label": "Địa chỉ liên hệ",
+        "type": "text",
+        "rules": "nullable|string|max:255",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "fullname": "Họ tên khách hàng mẫu #1",
+        "phone": "0934888019",
+        "email": "user34_1@example.com",
+        "customer_source": "Facebook Ads",
+        "status": "Khách hàng tiềm năng",
+        "address": "12 Đường Lê Lợi, Quận 1, TP.HCM"
+      },
+      {
+        "fullname": "Họ tên khách hàng mẫu #2",
+        "phone": "0934888029",
+        "email": "user34_2@example.com",
+        "customer_source": "Google Search",
+        "status": "Đang tư vấn",
+        "address": "24 Đường Lê Lợi, Quận 2, TP.HCM"
+      },
+      {
+        "fullname": "Họ tên khách hàng mẫu #3",
+        "phone": "0934888039",
+        "email": "user34_3@example.com",
+        "customer_source": "Giới thiệu bạn bè",
+        "status": "Đã ký hợp đồng",
+        "address": "36 Đường Lê Lợi, Quận 3, TP.HCM"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 34. Hệ thống quản lý khách hàng \n- Mô tả tình huống: Bộ phận kinh doanh cần quản lý khách hàng gồm họ tên, email, số \nđiện thoại, địa chỉ và nguồn khách hàng. Nhân viên kinh doanh tra cứu, thêm mới và \ncập nhật hồ sơ. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách khách hàng, tạo mới, chi tiết, chỉnh sửa và cập nhật. \nCâu 3. Tạo CustomerController xử lý danh sách và chi tiết khách hàng. \nCâu 4. Xây dựng giao diện Blade hiển thị thông tin khách hàng và thông báo kết quả thao \ntác. \nCâu 5. Validation họ tên bắt buộc, email hợp lệ và duy nhất, số điện thoại và địa chỉ theo \nquy tắc nhập liệu. \nCâu 6. Tạo Migration, Model Customer; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder tìm khách hàng theo tên, email và nguồn khách hàng. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử email trùng, cập nhật thông \ntin và quyền truy cập. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 35,
+    "num_str": "35",
+    "title": "Hệ thống quản lý phiếu nhập kho",
+    "desc": "Doanh nghiệp cần quản lý phiếu nhập kho gồm mã phiếu, nhà cung  cấp, ngày nhập, tổng số lượng và ghi chú. Nhân viên kho lập phiếu và theo dõi lịch sử  nhập hàng.",
+    "db_name": "db_bai35",
+    "model": "StockReceipt",
+    "table": "stock_receipts",
+    "controller": "Bai35Controller",
+    "fields": [
+      {
+        "name": "receipt_code",
+        "label": "Mã phiếu nhập kho",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "supplier_name",
+        "label": "Nhà cung cấp",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "receipt_date",
+        "label": "Ngày nhập kho",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "total_quantity",
+        "label": "Tổng số lượng nhập",
+        "type": "number",
+        "rules": "required|integer|min:1",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "total_cost",
+        "label": "Tổng giá trị lô hàng (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "notes",
+        "label": "Ghi chú kiểm hàng",
+        "type": "textarea",
+        "rules": "nullable|string",
+        "searchable": false,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "receipt_code": "STO-3501",
+        "supplier_name": "Nhà cung cấp mẫu #1",
+        "receipt_date": "2026-11-11",
+        "total_quantity": 15,
+        "total_cost": 150000,
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 35 - mục #1."
+      },
+      {
+        "receipt_code": "STO-3502",
+        "supplier_name": "Nhà cung cấp mẫu #2",
+        "receipt_date": "2026-11-12",
+        "total_quantity": 20,
+        "total_cost": 300000,
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 35 - mục #2."
+      },
+      {
+        "receipt_code": "STO-3503",
+        "supplier_name": "Nhà cung cấp mẫu #3",
+        "receipt_date": "2026-11-13",
+        "total_quantity": 25,
+        "total_cost": 450000,
+        "notes": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 35 - mục #3."
+      }
+    ],
+    "full_text": "ĐỀ SỐ 35. Hệ thống quản lý phiếu nhập kho \n- Mô tả tình huống: Doanh nghiệp cần quản lý phiếu nhập kho gồm mã phiếu, nhà cung \ncấp, ngày nhập, tổng số lượng và ghi chú. Nhân viên kho lập phiếu và theo dõi lịch sử \nnhập hàng. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách phiếu nhập, tạo phiếu, chi tiết và cập nhật phiếu. \nCâu 3. Tạo StockReceiptController xử lý danh sách và chi tiết phiếu nhập. \nCâu 4. Xây dựng View Blade hiển thị mã phiếu, nhà cung cấp, ngày nhập và tổng số lượng. \nCâu 5. Validation mã phiếu duy nhất, nhà cung cấp bắt buộc, ngày nhập hợp lệ và số lượng \nkhông âm. \nCâu 6. Tạo Migration, Model StockReceipt; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc phiếu nhập theo nhà cung cấp và khoảng ngày. \nCâu 8. Bảo vệ chức năng nhập kho bằng Middleware; kiểm thử dữ liệu sai và hoàn thiện \ncập nhật phiếu nhập. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 36,
+    "num_str": "36",
+    "title": "Hệ thống quản lý bài đánh giá sản phẩm",
+    "desc": "Website bán hàng cần quản lý đánh giá sản phẩm gồm sản phẩm,  người đánh giá, số sao, nội dung và trạng thái duyệt. Khách gửi đánh giá; quản trị viên  duyệt trước khi hiển thị công khai.",
+    "db_name": "db_bai36",
+    "model": "ProductReview",
+    "table": "product_reviews",
+    "controller": "Bai36Controller",
+    "fields": [
+      {
+        "name": "product_name",
+        "label": "Tên sản phẩm đánh giá",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "reviewer_name",
+        "label": "Người đánh giá",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "rating_stars",
+        "label": "Số sao đánh giá",
+        "type": "select",
+        "options": [
+          "1 Sao (Rất tệ)",
+          "2 Sao (Tạm ổn)",
+          "3 Sao (Bình thường)",
+          "4 Sao (Hài lòng)",
+          "5 Sao (Xuất sắc)"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "comment",
+        "label": "Nhận xét chi tiết",
+        "type": "textarea",
+        "rules": "required|string|min:5",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái kiểm duyệt",
+        "type": "select",
+        "options": [
+          "Chờ duyệt",
+          "Đã duyệt hiển thị",
+          "Đã ẩn do vi phạm"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "product_name": "Tên sản phẩm đánh giá mẫu #1",
+        "reviewer_name": "Người đánh giá mẫu #1",
+        "rating_stars": "1 Sao (Rất tệ)",
+        "comment": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 36 - mục #1.",
+        "status": "Chờ duyệt"
+      },
+      {
+        "product_name": "Tên sản phẩm đánh giá mẫu #2",
+        "reviewer_name": "Người đánh giá mẫu #2",
+        "rating_stars": "2 Sao (Tạm ổn)",
+        "comment": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 36 - mục #2.",
+        "status": "Đã duyệt hiển thị"
+      },
+      {
+        "product_name": "Tên sản phẩm đánh giá mẫu #3",
+        "reviewer_name": "Người đánh giá mẫu #3",
+        "rating_stars": "3 Sao (Bình thường)",
+        "comment": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 36 - mục #3.",
+        "status": "Đã ẩn do vi phạm"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 36. Hệ thống quản lý bài đánh giá sản phẩm \n- Mô tả tình huống:  Website bán hàng cần quản lý đánh giá sản phẩm gồm sản phẩm, \nngười đánh giá, số sao, nội dung và trạng thái duyệt. Khách gửi đánh giá; quản trị viên \nduyệt trước khi hiển thị công khai. \n- Yêu cầu: \nCâu 1. Khởi tạo ứng dụng Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách đánh giá, gửi đánh giá, chi tiết và duyệt đánh giá. \nCâu 3. Tạo ProductReviewController xử lý danh sách và tiếp nhận đánh giá. \nCâu 4. Xây dựng View Blade hiển thị số sao, nội dung và trạng thái duyệt. \nCâu 5. Validation số sao từ 1 đến 5, nội dung bắt buộc và trạng thái thuộc giá trị cho phép. \nCâu 6. Tạo Migration, Model ProductReview; triển khai lưu và truy vấn đánh giá bằng \nEloquent. \nCâu 7. Sử dụng Query Builder lọc đánh giá theo sản phẩm, số sao và trạng thái duyệt. \nCâu 8. Áp dụng Middleware bảo vệ chức năng duyệt; chỉ hiển thị đánh giá đã được duyệt \ntrên trang công khai. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 37,
+    "num_str": "37",
+    "title": "Hệ thống quản lý chương trình khuyến mãi",
+    "desc": "",
+    "db_name": "db_bai37",
+    "model": "Promotion",
+    "table": "promotions",
+    "controller": "Bai37Controller",
+    "fields": [
+      {
+        "name": "promo_code",
+        "label": "Mã khuyến mãi (Voucher)",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "promo_name",
+        "label": "Tên chương trình",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "discount_percent",
+        "label": "Phần trăm giảm (%)",
+        "type": "number",
+        "rules": "required|integer|between:1,100",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "start_date",
+        "label": "Ngày bắt đầu áp dụng",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "end_date",
+        "label": "Ngày kết thúc",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Hiệu lực",
+        "type": "select",
+        "options": [
+          "Đang kích hoạt",
+          "Sắp diễn ra",
+          "Đã hết hạn",
+          "Tạm khóa"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "promo_code": "PRO-3701",
+        "promo_name": "Tên chương trình mẫu #1",
+        "discount_percent": 15,
+        "start_date": "2026-11-11",
+        "end_date": "2026-11-11",
+        "status": "Đang kích hoạt"
+      },
+      {
+        "promo_code": "PRO-3702",
+        "promo_name": "Tên chương trình mẫu #2",
+        "discount_percent": 20,
+        "start_date": "2026-11-12",
+        "end_date": "2026-11-12",
+        "status": "Sắp diễn ra"
+      },
+      {
+        "promo_code": "PRO-3703",
+        "promo_name": "Tên chương trình mẫu #3",
+        "discount_percent": 25,
+        "start_date": "2026-11-13",
+        "end_date": "2026-11-13",
+        "status": "Đã hết hạn"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 37. Hệ thống quản lý chương trình khuyến mãi \n- Mô tả tình huống:  Cửa hàng cần quản lý mã khuyến mãi gồm mã, tên chương trình, \nphần trăm giảm giá, thời gian áp dụng và trạng thái. Nhân viên tạo và quản lý các \nchương trình khuyến mãi. \nYêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách khuyến mãi, tạo mới, chi tiết và cập nhật chương \ntrình. \nCâu 3. Tạo PromotionController xử lý danh sách và chi tiết chương trình. \nCâu 4. Xây dựng View Blade hiển thị mã, tỷ lệ giảm giá, thời gian áp dụng và trạng thái. \nCâu 5. Validation mã duy nhất, mức giảm giá từ 0 đến 100, thời gian kết thúc không trước \nthời gian bắt đầu. \nCâu 6. Tạo Migration, Model Promotion; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder tìm các chương trình đang có hiệu lực và lọc theo tỷ lệ giảm \ngiá. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử thời gian khuyến mãi không \nhợp lệ và mã trùng lặp. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 38,
+    "num_str": "38",
+    "title": "Hệ thống quản lý đặt phòng khách sạn",
+    "desc": "Khách sạn cần quản lý loại phòng, giá phòng, ngày nhận phòng,  ngày trả phòng và trạng thái đặt phòng. Nhân viên quản lý đặt phòng; khách xem thông  tin phòng.",
+    "db_name": "db_bai38",
+    "model": "Booking",
+    "table": "bookings",
+    "controller": "Bai38Controller",
+    "fields": [
+      {
+        "name": "booking_code",
+        "label": "Mã đặt phòng",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "guest_name",
+        "label": "Tên khách lưu trú",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "room_type",
+        "label": "Hạng phòng",
+        "type": "select",
+        "options": [
+          "Standard",
+          "Deluxe Room",
+          "Suite Cao Cấp",
+          "Presidential Suite"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "checkin_date",
+        "label": "Ngày nhận phòng",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "checkout_date",
+        "label": "Ngày trả phòng",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng đặt phòng",
+        "type": "select",
+        "options": [
+          "Đã xác nhận",
+          "Đã cọc tiền",
+          "Đã nhận phòng (Check-in)",
+          "Đã hoàn thành",
+          "Đã hủy"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "booking_code": "BOO-3801",
+        "guest_name": "Tên khách lưu trú mẫu #1",
+        "room_type": "Standard",
+        "checkin_date": "2026-11-11",
+        "checkout_date": "2026-11-11",
+        "status": "Đã xác nhận"
+      },
+      {
+        "booking_code": "BOO-3802",
+        "guest_name": "Tên khách lưu trú mẫu #2",
+        "room_type": "Deluxe Room",
+        "checkin_date": "2026-11-12",
+        "checkout_date": "2026-11-12",
+        "status": "Đã cọc tiền"
+      },
+      {
+        "booking_code": "BOO-3803",
+        "guest_name": "Tên khách lưu trú mẫu #3",
+        "room_type": "Suite Cao Cấp",
+        "checkin_date": "2026-11-13",
+        "checkout_date": "2026-11-13",
+        "status": "Đã nhận phòng (Check-in)"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 38. Hệ thống quản lý đặt phòng khách sạn \n- Mô tả tình huống:  Khách sạn cần quản lý loại phòng, giá phòng, ngày nhận phòng, \nngày trả phòng và trạng thái đặt phòng. Nhân viên quản lý đặt phòng; khách xem thông \ntin phòng. \n- Yêu cầu: \nCâu 1. Khởi tạo ứng dụng Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách phòng, chi tiết phòng, tạo đặt phòng và cập nhật \ntrạng thái. \nCâu 3. Tạo BookingController xử lý danh sách và chi tiết đặt phòng. \nCâu 4. Xây dựng View Blade hiển thị thông tin phòng, ngày nhận và ngày trả phòng. \nCâu 5. Validation ngày nhận và ngày trả phòng hợp lệ; ngày trả phải sau ngày nhận; thông \ntin khách bắt buộc. \nCâu 6. Tạo Migration, Model Booking; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc đặt phòng theo khoảng thời gian và trạng thái. \nCâu 8. Áp dụng Middleware bảo vệ trang quản trị; kiểm thử dữ liệu ngày sai và xử lý trạng \nthái đặt phòng. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 39,
+    "num_str": "39",
+    "title": "Hệ thống quản lý phương tiện",
+    "desc": "Doanh nghiệp vận tải cần quản lý phương tiện gồm biển số, loại xe, tải  trọng, ngày đăng kiểm và trạng thái hoạt động. Nhân viên quản lý hồ sơ phương tiện.",
+    "db_name": "db_bai39",
+    "model": "Vehicle",
+    "table": "vehicles",
+    "controller": "Bai39Controller",
+    "fields": [
+      {
+        "name": "license_plate",
+        "label": "Biển số xe",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "vehicle_type",
+        "label": "Loại phương tiện",
+        "type": "select",
+        "options": [
+          "Xe tải nhẹ (1.5 tấn)",
+          "Xe tải vừa (5 tấn)",
+          "Xe container",
+          "Xe đầu kéo",
+          "Xe bán tải"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "payload_tons",
+        "label": "Tải trọng (Tấn)",
+        "type": "number",
+        "rules": "required|numeric|min:0.5",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "inspection_date",
+        "label": "Ngày hết hạn đăng kiểm",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng vận hành",
+        "type": "select",
+        "options": [
+          "Sẵn sàng chạy",
+          "Đang chở hàng",
+          "Đang bảo trì định kỳ",
+          "Hỏng hóc"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "driver_name",
+        "label": "Tài xế phụ trách",
+        "type": "text",
+        "rules": "nullable|string|max:100",
+        "searchable": true,
+        "filterable": false
+      }
+    ],
+    "samples": [
+      {
+        "license_plate": "Dữ liệu Biển số xe số 1",
+        "vehicle_type": "Xe tải nhẹ (1.5 tấn)",
+        "payload_tons": 15,
+        "inspection_date": "2026-11-11",
+        "status": "Sẵn sàng chạy",
+        "driver_name": "Tài xế phụ trách mẫu #1"
+      },
+      {
+        "license_plate": "Dữ liệu Biển số xe số 2",
+        "vehicle_type": "Xe tải vừa (5 tấn)",
+        "payload_tons": 20,
+        "inspection_date": "2026-11-12",
+        "status": "Đang chở hàng",
+        "driver_name": "Tài xế phụ trách mẫu #2"
+      },
+      {
+        "license_plate": "Dữ liệu Biển số xe số 3",
+        "vehicle_type": "Xe container",
+        "payload_tons": 25,
+        "inspection_date": "2026-11-13",
+        "status": "Đang bảo trì định kỳ",
+        "driver_name": "Tài xế phụ trách mẫu #3"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 39. Hệ thống quản lý phương tiện \nMô tả tình huống: Doanh nghiệp vận tải cần quản lý phương tiện gồm biển số, loại xe, tải \ntrọng, ngày đăng kiểm và trạng thái hoạt động. Nhân viên quản lý hồ sơ phương tiện. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách phương tiện, tạo mới, chi tiết và cập nhật phương \ntiện. \nCâu 3. Tạo VehicleController xử lý danh sách và chi tiết phương tiện. \nCâu 4. Xây dựng View Blade hiển thị biển số, loại xe, tải trọng và trạng thái. \nCâu 5. Validation biển số duy nhất, loại xe bắt buộc, tải trọng dương và ngày đăng kiểm \nhợp lệ. \nCâu 6. Tạo Migration, Model Vehicle; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc phương tiện theo loại xe, trạng thái và thời gian đăng \nkiểm. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử biển số trùng và cập nhật \ntrạng thái hoạt động. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 40,
+    "num_str": "40",
+    "title": "Hệ thống quản lý lịch hẹn",
+    "desc": "Trung tâm dịch vụ cần quản lý lịch hẹn gồm tên khách hàng, số điện  thoại, dịch vụ, ngày giờ và trạng thái. Nhân viên tiếp nhận và cập nhật lịch hẹn.",
+    "db_name": "db_bai40",
+    "model": "Appointment",
+    "table": "appointments",
+    "controller": "Bai40Controller",
+    "fields": [
+      {
+        "name": "customer_name",
+        "label": "Tên khách hàng",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "phone",
+        "label": "Số điện thoại",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "service_name",
+        "label": "Dịch vụ hẹn trước",
+        "type": "select",
+        "options": [
+          "Khám sức khỏe tổng quát",
+          "Tư vấn tài chính",
+          "Chăm sóc da spa",
+          "Bảo dưỡng xe định kỳ"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "appointment_date",
+        "label": "Ngày hẹn",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "appointment_time",
+        "label": "Khung giờ hẹn",
+        "type": "select",
+        "options": [
+          "08:30 - 09:30",
+          "10:00 - 11:00",
+          "14:00 - 15:00",
+          "16:00 - 17:00"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Đã đặt hẹn",
+          "Đã xác nhận điện thoại",
+          "Khách đã đến",
+          "Hủy hẹn"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "customer_name": "Tên khách hàng mẫu #1",
+        "phone": "0940888019",
+        "service_name": "Khám sức khỏe tổng quát",
+        "appointment_date": "2026-11-11",
+        "appointment_time": "08:30 - 09:30",
+        "status": "Đã đặt hẹn"
+      },
+      {
+        "customer_name": "Tên khách hàng mẫu #2",
+        "phone": "0940888029",
+        "service_name": "Tư vấn tài chính",
+        "appointment_date": "2026-11-12",
+        "appointment_time": "10:00 - 11:00",
+        "status": "Đã xác nhận điện thoại"
+      },
+      {
+        "customer_name": "Tên khách hàng mẫu #3",
+        "phone": "0940888039",
+        "service_name": "Chăm sóc da spa",
+        "appointment_date": "2026-11-13",
+        "appointment_time": "14:00 - 15:00",
+        "status": "Khách đã đến"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 40. Hệ thống quản lý lịch hẹn \n- Mô tả tình huống: Trung tâm dịch vụ cần quản lý lịch hẹn gồm tên khách hàng, số điện \nthoại, dịch vụ, ngày giờ và trạng thái. Nhân viên tiếp nhận và cập nhật lịch hẹn. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách lịch hẹn, tạo lịch, chi tiết và cập nhật lịch. \nCâu 3. Tạo AppointmentController xử lý danh sách và chi tiết lịch hẹn. \nCâu 4. Xây dựng giao diện Blade hiển thị thông tin khách hàng, dịch vụ, thời gian và trạng \nthái. \nCâu 5. Validation thông tin khách hàng bắt buộc, ngày giờ hợp lệ và trạng thái thuộc danh \nsách cho phép. \nCâu 6. Tạo Migration, Model Appointment; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc lịch hẹn theo ngày và trạng thái. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản trị; kiểm thử tạo lịch hẹn và xử lý dữ \nliệu ngày giờ không hợp lệ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 41,
+    "num_str": "41",
+    "title": "Hệ thống quản lý chi phí dự án",
+    "desc": "Nhóm dự án cần theo dõi chi phí gồm tên khoản chi, số tiền, ngày  phát sinh, người đề xuất và trạng thái phê duyệt. Nhân viên nhập khoản chi; quản lý  phê duyệt.",
+    "db_name": "db_bai41",
+    "model": "Expense",
+    "table": "expenses",
+    "controller": "Bai41Controller",
+    "fields": [
+      {
+        "name": "expense_title",
+        "label": "Tên khoản chi phí",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "category",
+        "label": "Danh mục chi phí",
+        "type": "select",
+        "options": [
+          "Thiết bị văn phòng",
+          "Chi phí tiếp khách",
+          "Đi lại công tác",
+          "Thuê dịch vụ ngoài"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "amount",
+        "label": "Số tiền (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "expense_date",
+        "label": "Ngày phát sinh chi phí",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "proposer",
+        "label": "Người đề xuất chi",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng duyệt",
+        "type": "select",
+        "options": [
+          "Chờ quản lý duyệt",
+          "Đã phê duyệt",
+          "Đã chi tiền",
+          "Bị từ chối"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "expense_title": "Dữ liệu Tên khoản chi phí số 1",
+        "category": "Thiết bị văn phòng",
+        "amount": 150000,
+        "expense_date": "2026-11-11",
+        "proposer": "Dữ liệu Người đề xuất chi số 1",
+        "status": "Chờ quản lý duyệt"
+      },
+      {
+        "expense_title": "Dữ liệu Tên khoản chi phí số 2",
+        "category": "Chi phí tiếp khách",
+        "amount": 300000,
+        "expense_date": "2026-11-12",
+        "proposer": "Dữ liệu Người đề xuất chi số 2",
+        "status": "Đã phê duyệt"
+      },
+      {
+        "expense_title": "Dữ liệu Tên khoản chi phí số 3",
+        "category": "Đi lại công tác",
+        "amount": 450000,
+        "expense_date": "2026-11-13",
+        "proposer": "Dữ liệu Người đề xuất chi số 3",
+        "status": "Đã chi tiền"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 41. Hệ thống quản lý chi phí dự án \n- Mô tả tình huống: Nhóm dự án cần theo dõi chi phí gồm tên khoản chi, số tiền, ngày \nphát sinh, người đề xuất và trạng thái phê duyệt. Nhân viên nhập khoản chi; quản lý \nphê duyệt. \n- Yêu cầu: \nCâu 1. Tạo ứng dụng Laravel và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách chi phí, tạo khoản chi, chi tiết và cập nhật trạng thái \nphê duyệt. \nCâu 3. Tạo ExpenseController xử lý danh sách và tạo khoản chi. \nCâu 4. Xây dựng View Blade hiển thị khoản chi, số tiền và trạng thái phê duyệt. \nCâu 5. Validation tên khoản chi bắt buộc, số tiền lớn hơn 0, ngày phát sinh hợp lệ và trạng \nthái được phép. \nCâu 6. Tạo Migration, Model Expense; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder thống kê tổng chi phí theo trạng thái và lọc theo thời gian. \nCâu 8. Áp dụng Middleware và phân quyền người phê duyệt; kiểm thử việc cập nhật trạng \nthái phê duyệt. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 42,
+    "num_str": "42",
+    "title": "Hệ thống quản lý đăng ký thành viên",
+    "desc": "Một câu lạc bộ cần quản lý thành viên gồm họ tên, email, ngày tham  gia và trạng thái thành viên. Người dùng đăng ký tài khoản; quản trị viên quản lý danh  sách thành viên.",
+    "db_name": "db_bai42",
+    "model": "Member",
+    "table": "members",
+    "controller": "Bai42Controller",
+    "fields": [
+      {
+        "name": "member_code",
+        "label": "Mã thẻ thành viên",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "fullname",
+        "label": "Họ và tên thành viên",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "email",
+        "rules": "required|email",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "member_tier",
+        "label": "Hạng thành viên",
+        "type": "select",
+        "options": [
+          "Thành viên Chuẩn",
+          "Bạc (Silver)",
+          "Vàng (Gold)",
+          "Bạch Kim (Platinum)"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "join_date",
+        "label": "Ngày gia nhập",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái",
+        "type": "select",
+        "options": [
+          "Đang hoạt động",
+          "Hết hạn",
+          "Tạm khóa"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "member_code": "MEM-4201",
+        "fullname": "Họ và tên thành viên mẫu #1",
+        "email": "user42_1@example.com",
+        "member_tier": "Thành viên Chuẩn",
+        "join_date": "2026-11-11",
+        "status": "Đang hoạt động"
+      },
+      {
+        "member_code": "MEM-4202",
+        "fullname": "Họ và tên thành viên mẫu #2",
+        "email": "user42_2@example.com",
+        "member_tier": "Bạc (Silver)",
+        "join_date": "2026-11-12",
+        "status": "Hết hạn"
+      },
+      {
+        "member_code": "MEM-4203",
+        "fullname": "Họ và tên thành viên mẫu #3",
+        "email": "user42_3@example.com",
+        "member_tier": "Vàng (Gold)",
+        "join_date": "2026-11-13",
+        "status": "Tạm khóa"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 42. Hệ thống quản lý đăng ký thành viên \n- Mô tả tình huống: Một câu lạc bộ cần quản lý thành viên gồm họ tên, email, ngày tham \ngia và trạng thái thành viên. Người dùng đăng ký tài khoản; quản trị viên quản lý danh \nsách thành viên. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel, cấu hình môi trường và cơ sở dữ liệu. \nCâu 2. Khai báo Route cho biểu mẫu đăng ký, xử lý đăng ký, danh sách thành viên và cập \nnhật trạng thái. \nCâu 3. Tạo MembershipController xử lý danh sách thành viên và dữ liệu đăng ký. \nCâu 4. Xây dựng View Blade cho biểu mẫu đăng ký và danh sách thành viên. \nCâu 5. Validation họ tên bắt buộc, email hợp lệ và duy nhất; ngày tham gia hợp lệ. \nCâu 6. Tạo Migration, Model Member; lưu và truy vấn dữ liệu thành viên bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc thành viên theo trạng thái và thời gian tham gia. \nCâu 8. Sử dụng Middleware bảo vệ trang quản trị; triển khai hoặc tích hợp chức năng xác \nthực và kiểm tra quyền cập nhật trạng thái thành viên. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 43,
+    "num_str": "43",
+    "title": "Hệ thống quản lý tin bất động sản",
+    "desc": "Sàn giao dịch cần quản lý tin bất động sản gồm tiêu đề, loại bất  động sản, địa chỉ, diện tích, giá bán và hình ảnh. Khách xem tin; nhân viên quản lý tin  đăng.",
+    "db_name": "db_bai43",
+    "model": "RealEstate",
+    "table": "real_estates",
+    "controller": "Bai43Controller",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Tiêu đề tin bất động sản",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "property_type",
+        "label": "Loại hình BĐS",
+        "type": "select",
+        "options": [
+          "Căn hộ chung cư",
+          "Nhà phố liền kề",
+          "Biệt thự cao cấp",
+          "Đất nền dự án",
+          "Mặt bằng kinh doanh"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "address",
+        "label": "Vị trí / Địa chỉ",
+        "type": "text",
+        "rules": "required|string|max:255",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "area_m2",
+        "label": "Diện tích (m²)",
+        "type": "number",
+        "rules": "required|numeric|min:10",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "price_billion",
+        "label": "Giá bán (Tỷ VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0.1",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng giao dịch",
+        "type": "select",
+        "options": [
+          "Đang mở bán",
+          "Đã nhận cọc",
+          "Đã giao dịch thành công"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "title": "Dữ liệu Tiêu đề tin bất động sản số 1",
+        "property_type": "Căn hộ chung cư",
+        "address": "12 Đường Lê Lợi, Quận 1, TP.HCM",
+        "area_m2": 15,
+        "price_billion": 150000,
+        "status": "Đang mở bán"
+      },
+      {
+        "title": "Dữ liệu Tiêu đề tin bất động sản số 2",
+        "property_type": "Nhà phố liền kề",
+        "address": "24 Đường Lê Lợi, Quận 2, TP.HCM",
+        "area_m2": 20,
+        "price_billion": 300000,
+        "status": "Đã nhận cọc"
+      },
+      {
+        "title": "Dữ liệu Tiêu đề tin bất động sản số 3",
+        "property_type": "Biệt thự cao cấp",
+        "address": "36 Đường Lê Lợi, Quận 3, TP.HCM",
+        "area_m2": 25,
+        "price_billion": 450000,
+        "status": "Đã giao dịch thành công"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 43. Hệ thống quản lý tin bất động sản \n- Mô tả tình huống:  Sàn giao dịch cần quản lý tin bất động sản gồm tiêu đề, loại bất \nđộng sản, địa chỉ, diện tích, giá bán và hình ảnh. Khách xem tin; nhân viên quản lý tin \nđăng. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách tin, chi tiết, tạo mới và cập nhật tin bất động sản. \nCâu 3. Tạo RealEstateController xử lý danh sách và chi tiết tin. \nCâu 4. Xây dựng View Blade hiển thị địa chỉ, diện tích, giá bán và ảnh đại diện. \nCâu 5. Validation tiêu đề và địa chỉ bắt buộc, diện tích và giá bán dương, ảnh đúng định \ndạng. \nCâu 6. Tạo Migration, Model RealEstate; triển khai CRUD bằng Eloquent. \nCâu 7. Lưu ảnh bằng File Storage; sử dụng Query Builder lọc theo loại bất động sản, diện \ntích và khoảng giá. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử tải ảnh và cập nhật tin đăng. \n--- HẾT --- \n \n  "
+  },
+  {
+    "num": 44,
+    "num_str": "44",
+    "title": "Hệ thống quản lý yêu cầu mua hàng",
+    "desc": "Doanh nghiệp cần quản lý yêu cầu mua hàng gồm người đề xuất,  tên mặt hàng, số lượng, đơn giá dự kiến và trạng thái phê duyệt. Nhân viên gửi yêu cầu;  quản lý phê duyệt.",
+    "db_name": "db_bai44",
+    "model": "PurchaseRequest",
+    "table": "purchase_requests",
+    "controller": "Bai44Controller",
+    "fields": [
+      {
+        "name": "request_code",
+        "label": "Mã yêu cầu mua hàng",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "requester_name",
+        "label": "Người đề xuất",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "item_name",
+        "label": "Tên mặt hàng cần mua",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "quantity",
+        "label": "Số lượng",
+        "type": "number",
+        "rules": "required|integer|min:1",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "estimated_cost",
+        "label": "Đơn giá dự kiến (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái xét duyệt",
+        "type": "select",
+        "options": [
+          "Chờ phòng thu mua duyệt",
+          "Đang báo giá",
+          "Đã duyệt mua hàng",
+          "Hủy yêu cầu"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "request_code": "PUR-4401",
+        "requester_name": "Người đề xuất mẫu #1",
+        "item_name": "Tên mặt hàng cần mua mẫu #1",
+        "quantity": 15,
+        "estimated_cost": 150000,
+        "status": "Chờ phòng thu mua duyệt"
+      },
+      {
+        "request_code": "PUR-4402",
+        "requester_name": "Người đề xuất mẫu #2",
+        "item_name": "Tên mặt hàng cần mua mẫu #2",
+        "quantity": 20,
+        "estimated_cost": 300000,
+        "status": "Đang báo giá"
+      },
+      {
+        "request_code": "PUR-4403",
+        "requester_name": "Người đề xuất mẫu #3",
+        "item_name": "Tên mặt hàng cần mua mẫu #3",
+        "quantity": 25,
+        "estimated_cost": 450000,
+        "status": "Đã duyệt mua hàng"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 44. Hệ thống quản lý yêu cầu mua hàng \n- Mô tả tình huống: Doanh nghiệp cần quản lý yêu cầu mua hàng gồm người đề xuất, \ntên mặt hàng, số lượng, đơn giá dự kiến và trạng thái phê duyệt. Nhân viên gửi yêu cầu; \nquản lý phê duyệt. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Định nghĩa Route cho danh sách yêu cầu, tạo yêu cầu, chi tiết và cập nhật trạng \nthái. \nCâu 3. Tạo PurchaseRequestController xử lý danh sách và tạo yêu cầu mua hàng. \nCâu 4. Xây dựng View Blade hiển thị mặt hàng, số lượng, đơn giá và trạng thái. \nCâu 5. Validation tên mặt hàng bắt buộc, số lượng nguyên dương, đơn giá không âm và \ntrạng thái hợp lệ. \nCâu 6. Tạo Migration, Model PurchaseRequest; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc yêu cầu theo trạng thái và tính tổng giá trị dự kiến của \ncác yêu cầu. \nCâu 8. Áp dụng Middleware và phân quyền phê duyệt; kiểm thử dữ liệu sai và thao tác phê \nduyệt. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 45,
+    "num_str": "45",
+    "title": "Hệ thống quản lý tài sản doanh nghiệp",
+    "desc": "Doanh nghiệp cần quản lý tài sản gồm mã tài sản, tên, ngày mua,  nguyên giá, phòng ban sử dụng và tình trạng. Nhân viên tài sản cập nhật hồ sơ.",
+    "db_name": "db_bai45",
+    "model": "Asset",
+    "table": "assets",
+    "controller": "Bai45Controller",
+    "fields": [
+      {
+        "name": "asset_code",
+        "label": "Mã tài sản cố định",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "asset_name",
+        "label": "Tên tài sản",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "department",
+        "label": "Bộ phận quản lý / sử dụng",
+        "type": "select",
+        "options": [
+          "Ban Giám Đốc",
+          "Phòng Kỹ Thuật",
+          "Phòng Kế Toán",
+          "Phòng Hành Chính"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "purchase_date",
+        "label": "Ngày mua",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "original_value",
+        "label": "Nguyên giá sổ sách (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Hiện trạng tài sản",
+        "type": "select",
+        "options": [
+          "Đang sử dụng tốt",
+          "Cần bảo trì",
+          "Chờ sửa chữa",
+          "Đã hết khấu hao"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "asset_code": "ASS-4501",
+        "asset_name": "Tên tài sản mẫu #1",
+        "department": "Ban Giám Đốc",
+        "purchase_date": "2026-11-11",
+        "original_value": 15,
+        "status": "Đang sử dụng tốt"
+      },
+      {
+        "asset_code": "ASS-4502",
+        "asset_name": "Tên tài sản mẫu #2",
+        "department": "Phòng Kỹ Thuật",
+        "purchase_date": "2026-11-12",
+        "original_value": 20,
+        "status": "Cần bảo trì"
+      },
+      {
+        "asset_code": "ASS-4503",
+        "asset_name": "Tên tài sản mẫu #3",
+        "department": "Phòng Kế Toán",
+        "purchase_date": "2026-11-13",
+        "original_value": 25,
+        "status": "Chờ sửa chữa"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 45. Hệ thống quản lý tài sản doanh nghiệp \n- Mô tả tình huống:  Doanh nghiệp cần quản lý tài sản gồm mã tài sản, tên, ngày mua, \nnguyên giá, phòng ban sử dụng và tình trạng. Nhân viên tài sản cập nhật hồ sơ. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách tài sản, tạo mới, chi tiết và cập nhật tài sản. \nCâu 3. Tạo AssetController xử lý danh sách và chi tiết tài sản. \nCâu 4. Xây dựng View Blade hiển thị mã, tên, nguyên giá và tình trạng tài sản. \nCâu 5. Validation mã tài sản duy nhất, tên bắt buộc, nguyên giá không âm và ngày mua \nhợp lệ. \nCâu 6. Tạo Migration, Model Asset; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc tài sản theo phòng ban và tình trạng; sắp xếp theo ngày \nmua. \nCâu 8. Bảo vệ chức năng quản trị bằng Middleware; kiểm thử mã trùng và cập nhật tình \ntrạng tài sản. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 46,
+    "num_str": "46",
+    "title": "Hệ thống quản lý bài đăng diễn đàn",
+    "desc": "Một diễn đàn học tập cần quản lý bài đăng gồm tiêu đề, nội dung,  người đăng, danh mục và trạng thái duyệt. Thành viên đăng bài; quản trị viên kiểm  duyệt nội dung.",
+    "db_name": "db_bai46",
+    "model": "ForumPost",
+    "table": "forum_posts",
+    "controller": "Bai46Controller",
+    "fields": [
+      {
+        "name": "title",
+        "label": "Tiêu đề thảo luận",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "category",
+        "label": "Chuyên mục diễn đàn",
+        "type": "select",
+        "options": [
+          "Hỏi đáp Lập trình",
+          "Chia sẻ tài liệu",
+          "Góc tuyển dụng",
+          "Trò chuyện chung"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "author_name",
+        "label": "Tác giả bài đăng",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "content",
+        "label": "Nội dung bài viết",
+        "type": "textarea",
+        "rules": "required|string|min:10",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái duyệt",
+        "type": "select",
+        "options": [
+          "Đã hiển thị",
+          "Chờ kiểm duyệt",
+          "Khóa bình luận"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "title": "Dữ liệu Tiêu đề thảo luận số 1",
+        "category": "Hỏi đáp Lập trình",
+        "author_name": "Tác giả bài đăng mẫu #1",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 46 - mục #1.",
+        "status": "Đã hiển thị"
+      },
+      {
+        "title": "Dữ liệu Tiêu đề thảo luận số 2",
+        "category": "Chia sẻ tài liệu",
+        "author_name": "Tác giả bài đăng mẫu #2",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 46 - mục #2.",
+        "status": "Chờ kiểm duyệt"
+      },
+      {
+        "title": "Dữ liệu Tiêu đề thảo luận số 3",
+        "category": "Góc tuyển dụng",
+        "author_name": "Tác giả bài đăng mẫu #3",
+        "content": "Mô tả chi tiết và nội dung mẫu thử nghiệm cho bài tập 46 - mục #3.",
+        "status": "Khóa bình luận"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 46. Hệ thống quản lý bài đăng diễn đàn \n- Mô tả tình huống: Một diễn đàn học tập cần quản lý bài đăng gồm tiêu đề, nội dung, \nngười đăng, danh mục và trạng thái duyệt. Thành viên đăng bài; quản trị viên kiểm \nduyệt nội dung. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách bài đăng, tạo bài, chi tiết và cập nhật trạng thái duyệt. \nCâu 3. Tạo ForumPostController xử lý danh sách, chi tiết và tạo bài đăng. \nCâu 4. Xây dựng View Blade hiển thị tiêu đề, người đăng, nội dung và trạng thái duyệt. \nCâu 5. Validation tiêu đề và nội dung bắt buộc; giới hạn độ dài tiêu đề; trạng thái duyệt \nphải hợp lệ. \nCâu 6. Tạo Migration, Model ForumPost; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc bài đăng theo danh mục và trạng thái duyệt. \nCâu 8. Áp dụng Middleware bảo vệ chức năng kiểm duyệt; chỉ hiển thị bài đăng đã duyệt \ncho khách truy cập. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 47,
+    "num_str": "47",
+    "title": "Hệ thống quản lý đăng ký dịch vụ",
+    "desc": "Một trung tâm dịch vụ cần quản lý dịch vụ gồm tên dịch vụ, giá,  mô tả và trạng thái; đồng thời tiếp nhận đăng ký sử dụng dịch vụ từ khách hàng.",
+    "db_name": "db_bai47",
+    "model": "Service",
+    "table": "services",
+    "controller": "Bai47Controller",
+    "fields": [
+      {
+        "name": "service_code",
+        "label": "Mã gói dịch vụ",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "service_name",
+        "label": "Tên gói dịch vụ",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "service_type",
+        "label": "Nhóm dịch vụ",
+        "type": "select",
+        "options": [
+          "Dịch vụ Lưu trữ Cloud",
+          "Bảo trì phần mềm",
+          "Thiết kế Website",
+          "Tư vấn bảo mật"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "price",
+        "label": "Giá cước hàng tháng (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "duration_months",
+        "label": "Thời hạn hợp đồng (tháng)",
+        "type": "select",
+        "options": [
+          "1 tháng",
+          "6 tháng",
+          "12 tháng",
+          "24 tháng"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng cung cấp",
+        "type": "select",
+        "options": [
+          "Đang cung cấp",
+          "Tạm ngừng đăng ký mới"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "service_code": "SER-4701",
+        "service_name": "Tên gói dịch vụ mẫu #1",
+        "service_type": "Dịch vụ Lưu trữ Cloud",
+        "price": 150000,
+        "duration_months": "1 tháng",
+        "status": "Đang cung cấp"
+      },
+      {
+        "service_code": "SER-4702",
+        "service_name": "Tên gói dịch vụ mẫu #2",
+        "service_type": "Bảo trì phần mềm",
+        "price": 300000,
+        "duration_months": "6 tháng",
+        "status": "Tạm ngừng đăng ký mới"
+      },
+      {
+        "service_code": "SER-4703",
+        "service_name": "Tên gói dịch vụ mẫu #3",
+        "service_type": "Thiết kế Website",
+        "price": 450000,
+        "duration_months": "12 tháng",
+        "status": "Đang cung cấp"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 47. Hệ thống quản lý đăng ký dịch vụ \n- Mô tả tình huống:  Một trung tâm dịch vụ cần quản lý dịch vụ gồm tên dịch vụ, giá, \nmô tả và trạng thái; đồng thời tiếp nhận đăng ký sử dụng dịch vụ từ khách hàng. \n- Yêu cầu: \nCâu 1. Tạo ứng dụng Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách dịch vụ, chi tiết dịch vụ, tạo đăng ký và quản lý đăng \nký. \nCâu 3. Tạo ServiceController hoặc Controller phù hợp để xử lý danh sách dịch vụ và yêu \ncầu đăng ký. \nCâu 4. Xây dựng View Blade hiển thị dịch vụ và biểu mẫu đăng ký. \nCâu 5. Validation tên dịch vụ, thông tin khách hàng và dữ liệu đăng ký; giá dịch vụ không \nâm. \nCâu 6. Tạo Migration, Model Service và ServiceRegistration; triển khai quan hệ một-nhiều \nvà lưu đăng ký bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc đăng ký theo dịch vụ và trạng thái xử lý. \nCâu 8. Áp dụng Middleware bảo vệ khu vực quản trị; kiểm thử đăng ký và quyền cập nhật \ntrạng thái. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 48,
+    "num_str": "48",
+    "title": "Hệ thống quản lý đề tài nghiên cứu khoa học",
+    "desc": "Khoa chuyên môn cần quản lý đề tài nghiên cứu gồm tên đề tài, chủ  nhiệm, lĩnh vực, ngày bắt đầu, ngày kết thúc và trạng thái. Giảng viên đề xuất đề tài;  cán bộ quản lý cập nhật tiến độ.",
+    "db_name": "db_bai48",
+    "model": "ResearchTopic",
+    "table": "research_topics",
+    "controller": "Bai48Controller",
+    "fields": [
+      {
+        "name": "topic_code",
+        "label": "Mã đề tài nghiên cứu",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "topic_name",
+        "label": "Tên đề tài khoa học",
+        "type": "text",
+        "rules": "required|string|max:255",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "supervisor",
+        "label": "Chủ nhiệm đề tài",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "field",
+        "label": "Lĩnh vực nghiên cứu",
+        "type": "select",
+        "options": [
+          "Trí tuệ nhân tạo (AI)",
+          "An toàn thông tin",
+          "Dữ liệu lớn (Big Data)",
+          "Internet vạn vật (IoT)"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "funding",
+        "label": "Kinh phí nghiên cứu (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tiến độ nghiên cứu",
+        "type": "select",
+        "options": [
+          "Đang đăng ký",
+          "Đang thực hiện",
+          "Nghiệm thu cấp cơ sở",
+          "Đã bảo vệ thành công"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "topic_code": "RES-4801",
+        "topic_name": "Tên đề tài khoa học mẫu #1",
+        "supervisor": "Dữ liệu Chủ nhiệm đề tài số 1",
+        "field": "Trí tuệ nhân tạo (AI)",
+        "funding": 15,
+        "status": "Đang đăng ký"
+      },
+      {
+        "topic_code": "RES-4802",
+        "topic_name": "Tên đề tài khoa học mẫu #2",
+        "supervisor": "Dữ liệu Chủ nhiệm đề tài số 2",
+        "field": "An toàn thông tin",
+        "funding": 20,
+        "status": "Đang thực hiện"
+      },
+      {
+        "topic_code": "RES-4803",
+        "topic_name": "Tên đề tài khoa học mẫu #3",
+        "supervisor": "Dữ liệu Chủ nhiệm đề tài số 3",
+        "field": "Dữ liệu lớn (Big Data)",
+        "funding": 25,
+        "status": "Nghiệm thu cấp cơ sở"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 48. Hệ thống quản lý đề tài nghiên cứu khoa học \n- Mô tả tình huống: Khoa chuyên môn cần quản lý đề tài nghiên cứu gồm tên đề tài, chủ \nnhiệm, lĩnh vực, ngày bắt đầu, ngày kết thúc và trạng thái. Giảng viên đề xuất đề tài; \ncán bộ quản lý cập nhật tiến độ. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel và cấu hình cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách đề tài, tạo đề tài, chi tiết và cập nhật đề tài. \nCâu 3. Tạo ResearchTopicController xử lý danh sách và chi tiết đề tài. \nCâu 4. Xây dựng View Blade hiển thị tên đề tài, chủ nhiệm, thời gian và trạng thái. \nCâu 5. Validation tên đề tài và chủ nhiệm bắt buộc; ngày kết thúc không trước ngày bắt \nđầu; trạng thái hợp lệ. \nCâu 6. Tạo Migration, Model ResearchTopic; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc đề tài theo lĩnh vực và trạng thái; sắp xếp theo thời gian \nbắt đầu. \nCâu 8. Áp dụng Middleware bảo vệ chức năng quản trị; kiểm thử dữ liệu thời gian và \nquyền cập nhật tiến độ. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 49,
+    "num_str": "49",
+    "title": "Hệ thống quản lý đăng ký thực tập",
+    "desc": "Nhà trường cần quản lý đăng ký thực tập của sinh viên gồm mã sinh  viên, doanh nghiệp, vị trí thực tập, ngày bắt đầu, ngày kết thúc và trạng thái. Sinh viên  gửi đăng ký; cán bộ phụ trách xét duyệt.",
+    "db_name": "db_bai49",
+    "model": "InternshipRegistration",
+    "table": "internships",
+    "controller": "Bai49Controller",
+    "fields": [
+      {
+        "name": "student_code",
+        "label": "Mã sinh viên",
+        "type": "text",
+        "rules": "required|string|max:20",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "student_name",
+        "label": "Họ tên sinh viên",
+        "type": "text",
+        "rules": "required|string|max:100",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "company_name",
+        "label": "Doanh nghiệp tiếp nhận",
+        "type": "text",
+        "rules": "required|string|max:150",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "internship_role",
+        "label": "Vị trí thực tập",
+        "type": "select",
+        "options": [
+          "Thực tập sinh Backend",
+          "Thực tập sinh Frontend",
+          "Thực tập sinh QA/QC",
+          "Thực tập sinh DevOps"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "start_date",
+        "label": "Ngày bắt đầu",
+        "type": "date",
+        "rules": "required|date",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Trạng thái xét duyệt",
+        "type": "select",
+        "options": [
+          "Chờ khoa duyệt",
+          "Đã duyệt tiếp nhận",
+          "Đang thực tập",
+          "Đã nộp báo cáo"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "student_code": "INT-4901",
+        "student_name": "Họ tên sinh viên mẫu #1",
+        "company_name": "Doanh nghiệp tiếp nhận mẫu #1",
+        "internship_role": "Thực tập sinh Backend",
+        "start_date": "2026-11-11",
+        "status": "Chờ khoa duyệt"
+      },
+      {
+        "student_code": "INT-4902",
+        "student_name": "Họ tên sinh viên mẫu #2",
+        "company_name": "Doanh nghiệp tiếp nhận mẫu #2",
+        "internship_role": "Thực tập sinh Frontend",
+        "start_date": "2026-11-12",
+        "status": "Đã duyệt tiếp nhận"
+      },
+      {
+        "student_code": "INT-4903",
+        "student_name": "Họ tên sinh viên mẫu #3",
+        "company_name": "Doanh nghiệp tiếp nhận mẫu #3",
+        "internship_role": "Thực tập sinh QA/QC",
+        "start_date": "2026-11-13",
+        "status": "Đang thực tập"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 49. Hệ thống quản lý đăng ký thực tập \n- Mô tả tình huống: Nhà trường cần quản lý đăng ký thực tập của sinh viên gồm mã sinh \nviên, doanh nghiệp, vị trí thực tập, ngày bắt đầu, ngày kết thúc và trạng thái. Sinh viên \ngửi đăng ký; cán bộ phụ trách xét duyệt. \n- Yêu cầu: \nCâu 1. Tạo dự án Laravel và thiết lập kết nối cơ sở dữ liệu. \nCâu 2. Khai báo Route cho danh sách đăng ký, tạo đăng ký, chi tiết và cập nhật kết quả xét \nduyệt. \nCâu 3. Tạo InternshipController xử lý danh sách và tiếp nhận đăng ký thực tập. \nCâu 4. Xây dựng View Blade hiển thị sinh viên, doanh nghiệp, vị trí và trạng thái xét duyệt. \nCâu 5. Validation mã sinh viên, doanh nghiệp và vị trí bắt buộc; ngày kết thúc không trước \nngày bắt đầu. \nCâu 6. Tạo Migration, Model InternshipRegistration; triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc đăng ký theo doanh nghiệp và trạng thái xét duyệt. \nCâu 8. Áp dụng Middleware bảo vệ chức năng xét duyệt; kiểm thử dữ liệu đăng ký và \nquyền cập nhật kết quả. \n--- HẾT --- \n  "
+  },
+  {
+    "num": 50,
+    "num_str": "50",
+    "title": "Hệ thống quản lý bán hàng tổng hợp",
+    "desc": "Một cửa hàng cần xây dựng ứng dụng quản lý sản phẩm, danh mục  và đơn hàng. Mỗi sản phẩm thuộc một danh mục; mỗi đơn hàng có thông tin khách  hàng và trạng thái xử lý. Nhân viên quản lý toàn bộ nghiệp vụ; khách chỉ được xem sản  phẩm đang kinh doanh.",
+    "db_name": "db_bai50",
+    "model": "SaleProduct",
+    "table": "sales_products",
+    "controller": "Bai50Controller",
+    "fields": [
+      {
+        "name": "product_code",
+        "label": "Mã hàng",
+        "type": "text",
+        "rules": "required|string|max:30",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "name",
+        "label": "Tên mặt hàng kinh doanh",
+        "type": "text",
+        "rules": "required|string|max:200",
+        "searchable": true,
+        "filterable": false
+      },
+      {
+        "name": "category",
+        "label": "Ngành hàng",
+        "type": "select",
+        "options": [
+          "Thời trang & Làm đẹp",
+          "Đồ điện tử công nghệ",
+          "Nhà cửa & Đời sống",
+          "Bách hóa online"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      },
+      {
+        "name": "price",
+        "label": "Giá bán (VNĐ)",
+        "type": "number",
+        "rules": "required|numeric|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "stock",
+        "label": "Tồn kho thực tế",
+        "type": "number",
+        "rules": "required|integer|min:0",
+        "searchable": false,
+        "filterable": false
+      },
+      {
+        "name": "status",
+        "label": "Tình trạng kinh doanh",
+        "type": "select",
+        "options": [
+          "Đang kinh doanh",
+          "Hết hàng tạm thời",
+          "Ngừng kinh doanh"
+        ],
+        "rules": "required|string",
+        "searchable": false,
+        "filterable": true
+      }
+    ],
+    "samples": [
+      {
+        "product_code": "SAL-5001",
+        "name": "Tên mặt hàng kinh doanh mẫu #1",
+        "category": "Thời trang & Làm đẹp",
+        "price": 150000,
+        "stock": 15,
+        "status": "Đang kinh doanh"
+      },
+      {
+        "product_code": "SAL-5002",
+        "name": "Tên mặt hàng kinh doanh mẫu #2",
+        "category": "Đồ điện tử công nghệ",
+        "price": 300000,
+        "stock": 20,
+        "status": "Hết hàng tạm thời"
+      },
+      {
+        "product_code": "SAL-5003",
+        "name": "Tên mặt hàng kinh doanh mẫu #3",
+        "category": "Nhà cửa & Đời sống",
+        "price": 450000,
+        "stock": 25,
+        "status": "Ngừng kinh doanh"
+      }
+    ],
+    "full_text": "ĐỀ SỐ 50. Hệ thống quản lý bán hàng tổng hợp \n- Mô tả tình huống: Một cửa hàng cần xây dựng ứng dụng quản lý sản phẩm, danh mục \nvà đơn hàng. Mỗi sản phẩm thuộc một danh mục; mỗi đơn hàng có thông tin khách \nhàng và trạng thái xử lý. Nhân viên quản lý toàn bộ nghiệp vụ; khách chỉ được xem sản \nphẩm đang kinh doanh. \n- Yêu cầu: \nCâu 1. Khởi tạo dự án Laravel, cấu hình kết nối cơ sở dữ liệu, khởi chạy ứng dụng và xác \nđịnh các thành phần mã nguồn cần thiết. \nCâu 2. Khai báo các Route cho danh sách sản phẩm, chi tiết sản phẩm, danh sách đơn hàng \nvà cập nhật đơn hàng. \nCâu 3. Tạo ProductController và OrderController, triển khai chức năng hiển thị danh sách \nvà chi tiết sản phẩm, đơn hàng. \nCâu 4. Xây dựng giao diện Blade dùng layout chung; hiển thị danh sách sản phẩm, thông \ntin đơn hàng và thông báo kết quả xử lý. \nCâu 5. Validation thông tin sản phẩm và đơn hàng: tên sản phẩm bắt buộc, giá không âm, \nsố lượng hợp lệ, thông tin khách hàng bắt buộc và trạng thái đơn hàng hợp lệ. \nCâu 6. Tạo Migration và Model cho Category, Product, Order; xây dựng quan hệ danh \nmục–sản phẩm và triển khai CRUD bằng Eloquent. \nCâu 7. Sử dụng Query Builder lọc sản phẩm theo danh mục, lọc đơn hàng theo trạng thái; \nsử dụng Collection để xử lý hoặc tổng hợp dữ liệu lấy từ Eloquent. \nCâu 8. Áp dụng Middleware xác thực và phân quyền nhân viên quản trị; kiểm thử luồng \nquản lý sản phẩm, đơn hàng, dữ liệu không hợp lệ và truy cập trái phép. \n--- HẾT --- \n "
+  }
+]
