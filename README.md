@@ -1,23 +1,33 @@
-# Hệ Thống 50 Dự Án Laravel Độc Lập - Ôn Tập Môn Thực Hành
+# Hệ Thống 50 Dự Án Laravel 11 Độc Lập - Ôn Tập Môn Thực Hành
 
-Dự án được cấu trúc đặc biệt theo đúng yêu cầu: **chia mỗi bài tập thành 1 dự án Laravel độc lập riêng biệt** (từ thư mục `Bai01/` đến `Bai50/`). Khi cần nộp bài tập, bạn chỉ cần chọn đúng thư mục bài đó (ví dụ `Bai15`) để nén zip và nộp bài, không cần phải tải hay nộp toàn bộ 50 bài!
+Dự án được cấu trúc đặc biệt theo đúng yêu cầu: **chia mỗi bài tập thành 1 dự án Laravel 11 độc lập riêng biệt** (từ thư mục `Bai01/` đến `Bai50/`) và **kho tải file .zip trực tiếp** (trong thư mục `downloads/Bai01.zip` đến `downloads/Bai50.zip`).
+
+> **Giao diện Web siêu đơn giản:** Mở trang web lên &rarr; Tìm hoặc chọn bài &rarr; Bấm tải file `.zip` về máy ngay (Hoàn toàn không cần đăng nhập / đăng ký).
 
 ---
 
 ## 🌟 Điểm Nổi Bật
 
-1. **50 Dự án Laravel độc lập (`Bai01` &rarr; `Bai50`):**
+1. **Chuẩn Laravel 11 (`"laravel/framework": "^11.0"`):**
+   - Sử dụng cấu trúc hiện đại của Laravel 11 (`bootstrap/app.php` với `Application::configure()`).
+   - Tối giản các file thừa kế, chạy trên PHP 8.2+.
    - Mỗi thư mục chứa đầy đủ mã nguồn Laravel chuẩn: `artisan`, `composer.json`, `.env.example`, `app/`, `database/`, `resources/views/`, `routes/`, `public/`.
    - Controller và Model được đặt tên chuẩn chỉnh theo đúng câu hỏi trong đề PDF: `PostController` & `Post` (Đề 1), `ProductController` & `Product` (Đề 2), `StudentController` & `Student` (Đề 3), v.v.
-   - Migration và Seeder nạp sẵn dữ liệu mẫu thực tế.
+   - Migration và Seeder nạp sẵn ít nhất 10 bản ghi mẫu thực tế cho mỗi bài.
 
-2. **Cơ sở dữ liệu riêng biệt trên MySQL & phpMyAdmin:**
+2. **Tải File Zip Trực Tiếp 1-Click:**
+   - 50 File zip sạch (`Bai01.zip` &rarr; `Bai50.zip`) đã được đóng gói sẵn trong thư mục `downloads/`.
+   - Dung lượng siêu nhẹ (~38 KB/bài, không chứa `vendor/` cồng kềnh), tải tức thì.
+
+3. **Cơ sở dữ liệu riêng biệt trên MySQL & phpMyAdmin:**
    - 50 Database độc lập tương ứng: `db_bai01`, `db_bai02`, ..., `db_bai50`.
    - Xem trực tiếp cấu trúc từng CSDL tại: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/).
 
-3. **UI Tổng & Điều hướng qua lại mượt mà:**
-   - **UI Tổng (`index.php`)**: Truy cập tại [http://localhost/baitap/](http://localhost/baitap/) để xem danh sách 50 dự án, tìm kiếm nhanh và mở bất kỳ bài nào.
-   - **Điều hướng nhanh trên từng bài**: Thanh navbar của mỗi bài có nút **`[◀ Bài trước]`**, **`[Dropdown 50 bài]`**, **`[🏠 UI Tổng]`**, **`[Bài tiếp theo ▶]`**, **`[🗄️ phpMyAdmin]`**, **`[👤 Quyền Admin / Khách (Câu 8)]`**.
+4. **UI Tổng Đơn Giản & Tìm Kiếm Tức Thì:**
+   - **UI Tổng (`index.php`)**: Truy cập tại [http://localhost/baitap/](http://localhost/baitap/).
+   - Tìm kiếm thời gian thực theo số đề hoặc từ khóa.
+   - Nút **[TẢI VỀ FILE ZIP]** tải ngay bài đó để nộp bài tập.
+   - Nút **[Xem đề bài]** hiển thị chi tiết 8 câu hỏi yêu cầu của đề bài.
 
 ---
 
