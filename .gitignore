@@ -5,6 +5,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/shared_vendor
 .env
 .env.backup
 .env.production
@@ -16,3 +17,18 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Ignored in each individual BaiTap Laravel project
+Bai*/vendor
+Bai*/.env
+Bai*/.env.backup
+Bai*/storage/*.key
+Bai*/public/storage
+Bai*/storage/framework/cache/data/*
+Bai*/storage/framework/sessions/*
+Bai*/storage/framework/views/*
+Bai*/storage/logs/*
+!Bai*/storage/framework/cache/data/.gitignore
+!Bai*/storage/framework/sessions/.gitignore
+!Bai*/storage/framework/views/.gitignore
+!Bai*/storage/logs/.gitignore
